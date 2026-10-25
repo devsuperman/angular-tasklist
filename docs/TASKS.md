@@ -9,17 +9,19 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 ## Milestone 1 — Working prototype
 
 ### Phase 0 — Setup and tooling
+
 **Concepts:** Angular CLI, project structure, `bootstrapApplication`, `app.config.ts`.
 
-- [ ] Install the Angular CLI: `npm install -g @angular/cli`
-- [ ] Create the project in this repo: `ng new angular-tasklist --style=scss --routing`
-- [ ] Add ESLint (`ng add @angular-eslint/schematics`) and Prettier
-- [ ] Read the generated files: `main.ts`, `app.config.ts`, `app.ts`, `angular.json`
-- [ ] Create the `core/`, `shared/` and `features/` folders
+- [x] Install the Angular CLI: `npm install -g @angular/cli`
+- [x] Create the project in this repo: `ng new angular-tasklist --style=scss --routing`
+- [x] Add ESLint (`ng add @angular-eslint/schematics`) and Prettier
+- [x] Read the generated files: `main.ts`, `app.config.ts`, `app.ts`, `angular.json`
+- [x] Create the `core/`, `shared/` and `features/` folders
 
 **Done when:** `ng serve`, `ng test` and `ng lint` all work.
 
 ### Phase 1 — Components and templates (F1)
+
 **Concepts:** standalone components, interpolation, property/event binding, `@if`, `@for` with `track`, `@switch`, `@let`, class/style bindings, component styles.
 
 - [ ] Create the `Task` and `Project` models in `core/models/`
@@ -31,6 +33,7 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 **Done when:** a static list renders, and the styles change with the data.
 
 ### Phase 2 — Component communication and signals (F3, F4, F7)
+
 **Concepts:** `input()`, `output()`, `model()`, `signal`, `computed`, `effect`, `linkedSignal`, `<ng-content>`, `viewChild()`, lifecycle hooks, `DestroyRef`.
 
 - [ ] `TaskItemComponent` takes the task as `input.required()` and emits `toggle` and `delete`
@@ -39,11 +42,12 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 - [ ] `FilterBarComponent` with `model()` for the filter value (All / Pending / Done)
 - [ ] Reusable `CardComponent` with multi-slot `<ng-content>`
 - [ ] An "add task" input that uses `viewChild()` to focus the field
-- [ ] Log state changes with `effect` (then remove it, and understand when *not* to use effects)
+- [ ] Log state changes with `effect` (then remove it, and understand when _not_ to use effects)
 
 **Done when:** you can add, toggle and delete tasks in memory, and the counters update on their own.
 
 ### Phase 3 — Services and dependency injection
+
 **Concepts:** `@Injectable`, `inject()`, provider scopes, `InjectionToken`, `useValue` / `useFactory` / `useClass`.
 
 - [ ] Move state and logic into `TaskStore` (signals + `add`, `toggle`, `remove`, `update` methods)
@@ -59,6 +63,7 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 ## Milestone 2 — Full MVP
 
 ### Phase 4 — Routing (F8)
+
 **Concepts:** `provideRouter`, `routerLink`, `routerLinkActive`, `withComponentInputBinding()`, lazy loading, functional guards, resolvers, wildcard route, `withViewTransitions()`.
 
 - [ ] Set up the routes listed in TECH_STACK.md
@@ -73,6 +78,7 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 **Done when:** deep links work, and the network tab shows the lazy chunks loading.
 
 ### Phase 5 — Forms (F2, F6)
+
 **Concepts:** reactive forms, typed forms, `NonNullableFormBuilder`, `FormArray`, validators (sync, async, cross-field), `ControlValueAccessor`, template-driven forms.
 
 - [ ] Task form: title (required, min length), description, priority, due date, project
@@ -89,6 +95,7 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 **Done when:** you can create and edit tasks and projects with validation.
 
 ### Phase 6 — HTTP and RxJS (F5)
+
 **Concepts:** `provideHttpClient`, `HttpClient`, functional interceptors, `switchMap`, `debounceTime`, `distinctUntilChanged`, `catchError`, `retry`, `toSignal`, `toObservable`, `httpResource` / `rxResource`.
 
 - [ ] Install `json-server`, create `db.json` with seed data, add an `npm run api` script
@@ -102,6 +109,7 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 **Done when:** all CRUD goes through the API, and loading and error states show in the UI.
 
 ### Phase 7 — Directives and pipes
+
 **Concepts:** attribute directives, `host` bindings, structural directives (`TemplateRef`, `ViewContainerRef`), `hostDirectives`, pure pipes, built-in pipes.
 
 - [ ] `appHighlightOverdue` attribute directive
@@ -118,6 +126,7 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 ## Milestone 3 — Polished product
 
 ### Phase 8 — UI polish (F9, F10, F11)
+
 **Concepts:** Angular CDK, Angular Material, `@defer`, animations, accessibility.
 
 - [ ] Reorder tasks with CDK drag and drop, and save `order` through the API
@@ -130,6 +139,7 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 **Done when:** Lighthouse accessibility is above 90.
 
 ### Phase 9 — Testing
+
 **Concepts:** `TestBed`, testing signals, component harnesses, `provideHttpClientTesting` / `HttpTestingController`, Playwright.
 
 - [ ] Unit tests: `TaskStore`, `relativeDate` pipe, `authGuard`, error interceptor
@@ -144,6 +154,7 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 ## Milestone 4 — Production
 
 ### Phase 10 — Advanced and production (F12, F13)
+
 **Concepts:** SSR and hydration, i18n, PWA, budgets, CI/CD.
 
 - [ ] GitHub Actions workflow (`.github/workflows/ci.yml`): lint, test, build
