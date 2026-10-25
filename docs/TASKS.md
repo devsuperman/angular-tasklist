@@ -52,7 +52,7 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 
 - [ ] Move state and logic into `TaskStore` (signals + `add`, `toggle`, `remove`, `update` methods)
 - [ ] Expose read-only signals (`asReadonly()`, `computed`)
-- [ ] `APP_CONFIG` `InjectionToken` with the API base URL
+- [ ] `APP_CONFIG` `InjectionToken` with the storage key and the seed data URL
 - [ ] Abstract `StorageService` with a `LocalStorageService` implementation
 - [ ] Try a component-level provider and see that each instance gets its own service
 
@@ -62,14 +62,14 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 
 ## Milestone 2 — Full MVP
 
-### Phase 4 — Routing (F8)
+### Phase 4 — Routing
 
 **Concepts:** `provideRouter`, `routerLink`, `routerLinkActive`, `withComponentInputBinding()`, lazy loading, functional guards, resolvers, wildcard route, `withViewTransitions()`.
 
 - [ ] Set up the routes listed in TECH_STACK.md
 - [ ] Lazy load `tasks` and `projects` with `loadChildren` / `loadComponent`
-- [ ] Fake `AuthService` (logged-in state in a signal) and a `/login` page
-- [ ] `authGuard` that redirects to `/login`
+- [ ] Redirect `''` to `/tasks`
+- [ ] `taskExistsGuard` (functional `canActivate`) that redirects to `/tasks` when the id is unknown
 - [ ] `/tasks/:id` gets `id` as a component input
 - [ ] Resolver that loads the task before the detail page opens
 - [ ] 404 page for `**`
@@ -94,19 +94,20 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 
 **Done when:** you can create and edit tasks and projects with validation.
 
-### Phase 6 — HTTP and RxJS (F5)
+### Phase 6 — Persistence, HTTP and RxJS (F5)
 
-**Concepts:** `provideHttpClient`, `HttpClient`, functional interceptors, `switchMap`, `debounceTime`, `distinctUntilChanged`, `catchError`, `retry`, `toSignal`, `toObservable`, `httpResource` / `rxResource`.
+**Concepts:** `localStorage`, `provideHttpClient`, `HttpClient`, functional interceptors, `fromEvent`, `debounceTime`, `distinctUntilChanged`, `catchError`, `toSignal`, `toObservable`, `httpResource` / `rxResource`.
 
-- [ ] Install `json-server`, create `db.json` with seed data, add an `npm run api` script
-- [ ] `TaskApiService` and `ProjectApiService` with typed methods
-- [ ] `TaskStore` loads and saves through the API
-- [ ] Search box: `toObservable` → `debounceTime` → `switchMap` → `toSignal`
-- [ ] Load the task detail with `httpResource` (loading, error and value states)
-- [ ] Interceptors: auth header, global error handling (toast), loading bar
-- [ ] Optimistic toggle with rollback on error
+- [ ] `TaskRepository` and `ProjectRepository` with typed methods, saving through `StorageService` (see "Storage" in TECH_STACK.md)
+- [ ] Save a schema `version`, and fall back to seed data when stored JSON is missing or invalid
+- [ ] `TaskStore` and `ProjectStore` load from and save through the repositories
+- [ ] Create `public/seed.json` and load it with `httpResource` on the first visit (loading, error and value states)
+- [ ] Interceptor for the seed request: global error handling (toast) and a loading bar
+- [ ] Search box: `toObservable` → `debounceTime` → `distinctUntilChanged` → `toSignal`, filtering in memory
+- [ ] Keep two open tabs in sync with `fromEvent(window, 'storage')`
+- [ ] Handle a full storage (`QuotaExceededError`) with a clear message
 
-**Done when:** all CRUD goes through the API, and loading and error states show in the UI.
+**Done when:** data survives a reload, a first visit shows the seed data, and two tabs stay in sync.
 
 ### Phase 7 — Directives and pipes
 
@@ -114,7 +115,7 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 
 - [ ] `appHighlightOverdue` attribute directive
 - [ ] `appAutofocus` directive for the form's first field
-- [ ] `*appHasRole` structural directive (for example, hide "delete project" from non-admins)
+- [ ] `*appFeatureFlag` structural directive that shows content only when a flag in `APP_CONFIG` is on
 - [ ] `relativeDate` pipe ("in 2 days", "yesterday")
 - [ ] `priorityLabel` pipe
 - [ ] Use the built-in `date` and `titlecase` pipes
@@ -125,11 +126,11 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 
 ## Milestone 3 — Polished product
 
-### Phase 8 — UI polish (F9, F10, F11)
+### Phase 8 — UI polish (F8, F9, F10)
 
 **Concepts:** Angular CDK, Angular Material, `@defer`, animations, accessibility.
 
-- [ ] Reorder tasks with CDK drag and drop, and save `order` through the API
+- [ ] Reorder tasks with CDK drag and drop, and save `order` to storage
 - [ ] Confirmation dialog before delete (Material dialog or CDK overlay)
 - [ ] Statistics panel inside `@defer (on viewport)` with `@placeholder` and `@loading`
 - [ ] Dark/light theme toggle backed by a signal and saved to storage
@@ -142,10 +143,10 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 
 **Concepts:** `TestBed`, testing signals, component harnesses, `provideHttpClientTesting` / `HttpTestingController`, Playwright.
 
-- [ ] Unit tests: `TaskStore`, `relativeDate` pipe, `authGuard`, error interceptor
+- [ ] Unit tests: `TaskStore`, repositories (with an in-memory `StorageService`), `relativeDate` pipe, `taskExistsGuard`, error interceptor
 - [ ] Component tests: `TaskItemComponent` (inputs and outputs), task form (validation)
-- [ ] API service tests with `HttpTestingController`
-- [ ] E2E: log in → create a task → mark it done → delete it
+- [ ] Seed loading test with `HttpTestingController`
+- [ ] E2E: create a task → mark it done → reload and check it is still done → delete it
 
 **Done when:** `ng test` and the e2e suite pass.
 
@@ -153,15 +154,18 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 
 ## Milestone 4 — Production
 
-### Phase 10 — Advanced and production (F12, F13)
+### Phase 10 — Advanced and production (F11, F12)
 
-**Concepts:** SSR and hydration, i18n, PWA, budgets, CI/CD.
+**Concepts:** i18n, PWA, budgets, CI/CD, static hosting on GitHub Pages.
 
-- [ ] GitHub Actions workflow (`.github/workflows/ci.yml`): lint, test, build
-- [ ] Add SSR with `ng add @angular/ssr` and check hydration
-- [ ] i18n with `$localize`: English and pt-BR
-- [ ] PWA with `ng add @angular/pwa`
+- [ ] GitHub Actions workflow (`.github/workflows/ci.yml`): lint, test, build on every push and pull request
+- [ ] Deploy workflow (`.github/workflows/deploy.yml`) to GitHub Pages on push to `main` (see "Deployment" in TECH_STACK.md)
+- [ ] Add `"build:pages": "ng build --base-href /angular-tasklist/"` and copy `index.html` to `404.html` after the build
+- [ ] Set **Settings → Pages → Source** to **GitHub Actions**
+- [ ] Check that a deep link (for example `/angular-tasklist/projects`) loads on refresh
+- [ ] i18n with `$localize`: English and pt-BR (one build per language, or runtime loading; check it works under the Pages base path)
+- [ ] PWA with `ng add @angular/pwa` (check the service worker scope under `/angular-tasklist/`)
 - [ ] Check bundle budgets and analyze the bundle
-- [ ] Deploy a public demo
+- [ ] Add the demo link and a deploy badge to `README.md`
 
-**Done when:** every push runs CI and there is a public URL.
+**Done when:** every push runs CI, and every push to `main` updates https://devsuperman.github.io/angular-tasklist/.
