@@ -4,19 +4,19 @@ The technical decisions, architecture and conventions for the project. For what 
 
 ## Stack
 
-| Concern | Choice | Why |
-|---------|--------|-----|
-| Framework | Latest stable Angular, standalone components (no NgModules) | The current recommended way to write Angular |
-| Reactivity | Signals (`signal`, `computed`, `effect`, `linkedSignal`, `resource`) + RxJS for HTTP and streams | Signals are Angular's main reactivity model; RxJS is still used for async streams |
-| Change detection | Zoneless (the default in new projects since Angular 21) | Matches modern Angular and forces a clear understanding of signals |
-| Language | TypeScript in strict mode | Catches errors early, and typed forms need it |
-| Styling | SCSS; Angular Material + CDK later (phase 8) | SCSS is simple to start with; the CDK gives drag and drop, overlays and a11y |
-| Fake backend | `json-server` serving `db.json` | A real REST API without writing a backend |
-| Unit tests | Vitest (the Angular CLI default) + Angular testing utilities | Fast, and the default for new projects |
-| E2E tests | Playwright | Reliable cross-browser tests |
-| Code quality | ESLint (`@angular-eslint`), Prettier | Consistent style and catches mistakes |
-| CI/CD | GitHub Actions; deploy to GitHub Pages, Firebase or Vercel | Free and integrated with the repo |
-| Later | `@angular/ssr`, `@angular/localize`, `@angular/pwa` | SSR and hydration, i18n, offline support |
+| Concern          | Choice                                                                                           | Why                                                                               |
+| ---------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| Framework        | Latest stable Angular, standalone components (no NgModules)                                      | The current recommended way to write Angular                                      |
+| Reactivity       | Signals (`signal`, `computed`, `effect`, `linkedSignal`, `resource`) + RxJS for HTTP and streams | Signals are Angular's main reactivity model; RxJS is still used for async streams |
+| Change detection | Zoneless (the default in new projects since Angular 21)                                          | Matches modern Angular and forces a clear understanding of signals                |
+| Language         | TypeScript in strict mode                                                                        | Catches errors early, and typed forms need it                                     |
+| Styling          | SCSS; Angular Material + CDK later (phase 8)                                                     | SCSS is simple to start with; the CDK gives drag and drop, overlays and a11y      |
+| Fake backend     | `json-server` serving `db.json`                                                                  | A real REST API without writing a backend                                         |
+| Unit tests       | Vitest (the Angular CLI default) + Angular testing utilities                                     | Fast, and the default for new projects                                            |
+| E2E tests        | Playwright                                                                                       | Reliable cross-browser tests                                                      |
+| Code quality     | ESLint (`@angular-eslint`), Prettier                                                             | Consistent style and catches mistakes                                             |
+| CI/CD            | GitHub Actions; deploy to GitHub Pages, Firebase or Vercel                                       | Free and integrated with the repo                                                 |
+| Later            | `@angular/ssr`, `@angular/localize`, `@angular/pwa`                                              | SSR and hydration, i18n, offline support                                          |
 
 ## Architecture
 
@@ -56,14 +56,14 @@ src/app/
 
 ### Routes
 
-| Path | Component | Notes |
-|------|-----------|-------|
-| `/login` | `LoginPage` | Public |
-| `/tasks` | `TaskListPage` | Lazy loaded, `authGuard` |
-| `/tasks/new` | `TaskFormPage` | `unsavedChangesGuard` |
+| Path         | Component      | Notes                                 |
+| ------------ | -------------- | ------------------------------------- |
+| `/login`     | `LoginPage`    | Public                                |
+| `/tasks`     | `TaskListPage` | Lazy loaded, `authGuard`              |
+| `/tasks/new` | `TaskFormPage` | `unsavedChangesGuard`                 |
 | `/tasks/:id` | `TaskFormPage` | The `id` arrives as a component input |
-| `/projects` | `ProjectsPage` | Lazy loaded, `authGuard` |
-| `**` | `NotFoundPage` | |
+| `/projects`  | `ProjectsPage` | Lazy loaded, `authGuard`              |
+| `**`         | `NotFoundPage` |                                       |
 
 ## Data model
 
@@ -76,10 +76,10 @@ interface Task {
   description?: string;
   done: boolean;
   priority: Priority;
-  dueDate?: string;      // ISO date
+  dueDate?: string; // ISO date
   tags: string[];
   projectId: string;
-  order: number;         // for drag and drop
+  order: number; // for drag and drop
   createdAt: string;
 }
 
@@ -92,14 +92,14 @@ interface Project {
 
 ### API (json-server)
 
-| Method | Endpoint | Purpose |
-|--------|----------|---------|
-| GET | `/tasks?projectId=&done=&q=` | List, filter and search |
-| GET | `/tasks/:id` | Get one task |
-| POST | `/tasks` | Create |
-| PATCH | `/tasks/:id` | Partial update (toggle, reorder) |
-| DELETE | `/tasks/:id` | Delete |
-| GET / POST / PATCH / DELETE | `/projects[/:id]` | Project CRUD |
+| Method                      | Endpoint                     | Purpose                          |
+| --------------------------- | ---------------------------- | -------------------------------- |
+| GET                         | `/tasks?projectId=&done=&q=` | List, filter and search          |
+| GET                         | `/tasks/:id`                 | Get one task                     |
+| POST                        | `/tasks`                     | Create                           |
+| PATCH                       | `/tasks/:id`                 | Partial update (toggle, reorder) |
+| DELETE                      | `/tasks/:id`                 | Delete                           |
+| GET / POST / PATCH / DELETE | `/projects[/:id]`            | Project CRUD                     |
 
 ## Conventions
 

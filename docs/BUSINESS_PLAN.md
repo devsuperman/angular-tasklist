@@ -24,26 +24,26 @@ A simple, fast task manager for one person. It groups tasks into projects, shows
 
 ### MVP (must have)
 
-| # | Feature | Description |
-|---|---------|-------------|
-| F1 | Task list | See all tasks with title, priority, due date and status |
-| F2 | Create / edit / delete task | A form with validation |
-| F3 | Mark as done | Toggle a task's status from the list |
-| F4 | Filters | All / Pending / Done, plus filtering by project |
-| F5 | Search | Search tasks by title, with results while typing |
-| F6 | Projects | Create, rename and delete projects, each with a color |
-| F7 | Counters | Total, done, pending and overdue |
-| F8 | Login (fake) | A simple login that protects the app routes |
+| #   | Feature                     | Description                                             |
+| --- | --------------------------- | ------------------------------------------------------- |
+| F1  | Task list                   | See all tasks with title, priority, due date and status |
+| F2  | Create / edit / delete task | A form with validation                                  |
+| F3  | Mark as done                | Toggle a task's status from the list                    |
+| F4  | Filters                     | All / Pending / Done, plus filtering by project         |
+| F5  | Search                      | Search tasks by title, with results while typing        |
+| F6  | Projects                    | Create, rename and delete projects, each with a color   |
+| F7  | Counters                    | Total, done, pending and overdue                        |
+| F8  | Login (fake)                | A simple login that protects the app routes             |
 
 ### Later (nice to have)
 
-| # | Feature | Description |
-|---|---------|-------------|
-| F9  | Drag and drop | Reorder tasks by hand |
-| F10 | Statistics panel | A chart of done vs. pending per project |
-| F11 | Dark mode | Switch between light and dark themes |
-| F12 | Multiple languages | English and Portuguese (pt-BR) |
-| F13 | Offline / installable | Works as a PWA |
+| #   | Feature               | Description                             |
+| --- | --------------------- | --------------------------------------- |
+| F9  | Drag and drop         | Reorder tasks by hand                   |
+| F10 | Statistics panel      | A chart of done vs. pending per project |
+| F11 | Dark mode             | Switch between light and dark themes    |
+| F12 | Multiple languages    | English and Portuguese (pt-BR)          |
+| F13 | Offline / installable | Works as a PWA                          |
 
 ### Out of scope
 
@@ -64,28 +64,30 @@ A simple, fast task manager for one person. It groups tasks into projects, shows
 ## Success criteria
 
 ### Product
+
 - All MVP features work end to end against the fake API.
 - Lighthouse accessibility score above 90, and the layout works on mobile.
 - A public demo URL.
 
 ### Learning (the real goal)
+
 - Every item in the concept checklist in [TECH_STACK.md](TECH_STACK.md) has been used in the code at least once.
 - Each phase in [TASKS.md](TASKS.md) has a pull request that summarizes what was learned.
 - Automated tests cover the core logic, and CI runs on every push.
 
 ## Milestones
 
-| Milestone | Phases (see TASKS.md) | Outcome |
-|-----------|-----------------------|---------|
-| M1 — Working prototype | 0–3 | In-memory task list with state in a service |
-| M2 — Full MVP | 4–7 | Routing, forms, API integration, directives and pipes |
-| M3 — Polished product | 8–9 | UI polish and a test suite |
-| M4 — Production | 10 | SSR, i18n, PWA, CI and deployment |
+| Milestone              | Phases (see TASKS.md) | Outcome                                               |
+| ---------------------- | --------------------- | ----------------------------------------------------- |
+| M1 — Working prototype | 0–3                   | In-memory task list with state in a service           |
+| M2 — Full MVP          | 4–7                   | Routing, forms, API integration, directives and pipes |
+| M3 — Polished product  | 8–9                   | UI polish and a test suite                            |
+| M4 — Production        | 10                    | SSR, i18n, PWA, CI and deployment                     |
 
 ## Risks
 
-| Risk | Mitigation |
-|------|------------|
-| Scope grows and the project stalls | Finish the MVP before any "later" feature |
+| Risk                               | Mitigation                                            |
+| ---------------------------------- | ----------------------------------------------------- |
+| Scope grows and the project stalls | Finish the MVP before any "later" feature             |
 | Angular APIs change (new versions) | Follow angular.dev and pin versions in `package.json` |
-| Learning stays shallow | Write notes in `NOTES.md` after each phase |
+| Learning stays shallow             | Write notes in `NOTES.md` after each phase            |
