@@ -30,7 +30,7 @@ describe('TaskItemComponent', () => {
     fixture.componentInstance.remove.subscribe(removed);
 
     el.querySelector<HTMLInputElement>('input[type=checkbox]')!.click();
-    el.querySelector<HTMLButtonElement>('button[aria-label="Delete Buy coffee"]')!.click();
+    el.querySelector<HTMLButtonElement>('button.icon')!.click();
 
     expect(toggled).toHaveBeenCalledWith('t1');
     expect(removed).toHaveBeenCalledWith('t1');

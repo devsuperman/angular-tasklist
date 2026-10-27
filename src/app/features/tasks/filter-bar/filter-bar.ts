@@ -13,8 +13,8 @@ export class FilterBarComponent {
   readonly status = model<StatusFilter>('all');
 
   protected readonly options: { value: StatusFilter; label: string }[] = [
-    { value: 'all', label: 'All' },
-    { value: 'pending', label: 'Pending' },
-    { value: 'done', label: 'Done' },
+    { value: 'all', label: $localize`All` },
+    { value: 'pending', label: $localize`Pending` },
+    { value: 'done', label: $localize`Done` },
   ];
 }

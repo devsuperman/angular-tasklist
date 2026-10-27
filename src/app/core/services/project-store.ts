@@ -3,7 +3,9 @@ import { Project } from '../models/project';
 import { InitialData } from './initial-data';
 
 /** Used when there is no saved data and the seed could not be loaded. */
-export const DEFAULT_PROJECTS: Project[] = [{ id: 'inbox', name: 'Inbox', color: '#6b7280' }];
+export const DEFAULT_PROJECTS: Project[] = [
+  { id: 'inbox', name: $localize`Inbox`, color: '#6b7280' },
+];
 
 @Injectable({ providedIn: 'root' })
 export class ProjectStore {

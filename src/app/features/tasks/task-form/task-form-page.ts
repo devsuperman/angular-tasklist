@@ -106,6 +106,10 @@ export class TaskFormPage implements HasUnsavedChanges {
     return this.form.controls.tags;
   }
 
+  protected tagLabel(index: number): string {
+    return $localize`Tag ${index + 1}:number:`;
+  }
+
   protected addTag(value = ''): void {
     this.tags.push(this.fb.control(value, [Validators.required, Validators.maxLength(30)]));
   }

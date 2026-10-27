@@ -1,0 +1,104 @@
+{
+  "projects": [
+    {
+      "id": "inbox",
+      "name": "Entrada",
+      "color": "#6b7280"
+    },
+    {
+      "id": "study",
+      "name": "Estudos",
+      "color": "#2563eb"
+    },
+    {
+      "id": "work",
+      "name": "Trabalho",
+      "color": "#d97706"
+    },
+    {
+      "id": "home",
+      "name": "Casa",
+      "color": "#16a34a"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "seed-1",
+      "title": "Ler o guia de signals do Angular",
+      "done": false,
+      "priority": "high",
+      "tags": ["angular"],
+      "projectId": "study",
+      "order": 0,
+      "createdAt": "2026-10-01T09:00:00.000Z",
+      "dueDate": "2027-01-15",
+      "description": "Comece por signal, computed e effect."
+    },
+    {
+      "id": "seed-2",
+      "title": "Terminar a validação do formulário de tarefas",
+      "done": false,
+      "priority": "medium",
+      "tags": ["angular", "formulários"],
+      "projectId": "study",
+      "order": 1,
+      "createdAt": "2026-10-01T09:00:00.000Z",
+      "dueDate": "2027-02-01"
+    },
+    {
+      "id": "seed-3",
+      "title": "Enviar o relatório semanal",
+      "done": false,
+      "priority": "high",
+      "tags": ["relatório"],
+      "projectId": "work",
+      "order": 2,
+      "createdAt": "2026-10-01T09:00:00.000Z",
+      "dueDate": "2026-10-20",
+      "description": "Esta está atrasada de propósito."
+    },
+    {
+      "id": "seed-4",
+      "title": "Preparar a demo da sprint",
+      "done": false,
+      "priority": "medium",
+      "tags": [],
+      "projectId": "work",
+      "order": 3,
+      "createdAt": "2026-10-01T09:00:00.000Z",
+      "dueDate": "2027-03-10"
+    },
+    {
+      "id": "seed-5",
+      "title": "Comprar café",
+      "done": true,
+      "priority": "low",
+      "tags": ["compras"],
+      "projectId": "home",
+      "order": 4,
+      "createdAt": "2026-10-01T09:00:00.000Z"
+    },
+    {
+      "id": "seed-6",
+      "title": "Regar as plantas",
+      "done": false,
+      "priority": "low",
+      "tags": [],
+      "projectId": "home",
+      "order": 5,
+      "createdAt": "2026-10-01T09:00:00.000Z",
+      "dueDate": "2027-01-05"
+    },
+    {
+      "id": "seed-7",
+      "title": "Abrir o app em uma segunda aba",
+      "done": false,
+      "priority": "medium",
+      "tags": ["dica"],
+      "projectId": "inbox",
+      "order": 6,
+      "createdAt": "2026-10-01T09:00:00.000Z",
+      "description": "As mudanças em uma aba aparecem na outra."
+    }
+  ]
+}

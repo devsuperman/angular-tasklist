@@ -33,5 +33,5 @@ export interface ConfirmDialogData {
 export class ConfirmDialogComponent {
   protected readonly data = inject<ConfirmDialogData>(DIALOG_DATA);
   protected readonly ref = inject<DialogRef<boolean>>(DialogRef);
-  protected readonly cancel = 'Cancel';
+  protected readonly cancel = $localize`Cancel`;
 }

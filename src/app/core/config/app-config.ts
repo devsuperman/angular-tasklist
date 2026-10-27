@@ -1,4 +1,4 @@
-import { InjectionToken } from '@angular/core';
+import { InjectionToken, LOCALE_ID, inject } from '@angular/core';
 
 export interface AppConfig {
   /** The localStorage key that holds all the app data. */
@@ -17,7 +17,15 @@ export const DEFAULT_APP_CONFIG: AppConfig = {
   features: { statistics: true, dragAndDrop: true },
 };
 
+/** The demo data is translated too: Portuguese users get `seed.pt-BR.json`. */
+export function appConfigFactory(): AppConfig {
+  const locale = inject(LOCALE_ID);
+  return locale === 'en-US'
+    ? DEFAULT_APP_CONFIG
+    : { ...DEFAULT_APP_CONFIG, seedUrl: `seed.${locale}.json` };
+}
+
 export const APP_CONFIG = new InjectionToken<AppConfig>('APP_CONFIG', {
   providedIn: 'root',
-  factory: () => DEFAULT_APP_CONFIG,
+  factory: appConfigFactory,
 });

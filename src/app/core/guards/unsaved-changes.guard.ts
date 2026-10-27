@@ -9,8 +9,8 @@ export interface HasUnsavedChanges {
 export const unsavedChangesGuard: CanDeactivateFn<HasUnsavedChanges> = (component) =>
   !component.hasUnsavedChanges() ||
   inject(ConfirmService).confirm({
-    title: 'Leave this page?',
-    message: 'You have unsaved changes. They will be lost.',
-    confirmLabel: 'Leave',
-    cancelLabel: 'Stay',
+    title: $localize`Leave this page?`,
+    message: $localize`You have unsaved changes. They will be lost.`,
+    confirmLabel: $localize`Leave`,
+    cancelLabel: $localize`Stay`,
   });

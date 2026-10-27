@@ -8,7 +8,9 @@ import { ToastService } from '../../../core/services/toast.service';
       @for (toast of toasts(); track toast.id) {
         <div class="toast" [class.error]="toast.kind === 'error'">
           <span>{{ toast.message }}</span>
-          <button type="button" aria-label="Dismiss" (click)="dismiss(toast.id)">✕</button>
+          <button type="button" aria-label="Dismiss" i18n-aria-label (click)="dismiss(toast.id)">
+            ✕
+          </button>
         </div>
       }
     </div>

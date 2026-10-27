@@ -1,26 +1,26 @@
 <section class="task-list">
   <div class="heading">
-    <h2>Tasks</h2>
-    <a class="button" routerLink="/tasks/new">New task</a>
+    <h2 i18n>Tasks</h2>
+    <a class="button" routerLink="/tasks/new" i18n>New task</a>
   </div>
 
   <app-card>
-    <span card-title>Summary</span>
+    <span card-title i18n>Summary</span>
     <dl class="counters">
       <div>
-        <dt>Total</dt>
+        <dt i18n>Total</dt>
         <dd>{{ total() }}</dd>
       </div>
       <div>
-        <dt>Done</dt>
+        <dt i18n>Done</dt>
         <dd>{{ doneCount() }}</dd>
       </div>
       <div>
-        <dt>Pending</dt>
+        <dt i18n>Pending</dt>
         <dd>{{ pendingCount() }}</dd>
       </div>
       <div [class.alert]="overdueCount() > 0">
-        <dt>Overdue</dt>
+        <dt i18n>Overdue</dt>
         <dd>{{ overdueCount() }}</dd>
       </div>
     </dl>
@@ -31,35 +31,36 @@
   <div class="toolbar">
     <app-filter-bar [(status)]="filter" />
 
-    <label class="visually-hidden" for="project-filter">Project</label>
+    <label class="visually-hidden" for="project-filter" i18n>Project</label>
     <select
       id="project-filter"
       [value]="projectFilter()"
       (change)="projectFilter.set(projectSelect.value)"
       #projectSelect
     >
-      <option value="">All projects</option>
+      <option value="" i18n>All projects</option>
       @for (project of projects(); track project.id) {
         <option [value]="project.id">{{ project.name }}</option>
       }
     </select>
 
-    <label class="visually-hidden" for="search">Search</label>
+    <label class="visually-hidden" for="search" i18n>Search</label>
     <input
       id="search"
       #search
       type="search"
       placeholder="Search by title"
+      i18n-placeholder
       [value]="query()"
       (input)="query.set(search.value)"
     />
   </div>
 
   @if (isLoading()) {
-    <p class="status">Loading your first tasks…</p>
+    <p class="status" i18n>Loading your first tasks…</p>
   } @else {
     @if (loadError()) {
-      <p class="status error" role="alert">
+      <p class="status error" role="alert" i18n>
         Could not load the demo data. You can still add tasks.
       </p>
     }
@@ -72,7 +73,7 @@
               class="handle"
               cdkDragHandle
               #handle
-              [attr.aria-label]="'Reorder ' + task.title"
+              [attr.aria-label]="reorderLabel(task)"
               aria-describedby="reorder-help"
               (keydown.arrowup)="$event.preventDefault(); moveBy(task, -1, handle)"
               (keydown.arrowdown)="$event.preventDefault(); moveBy(task, 1, handle)"
@@ -88,12 +89,12 @@
           />
         </li>
       } @empty {
-        <li class="empty">No tasks here. Enjoy your free time!</li>
+        <li class="empty" i18n>No tasks here. Enjoy your free time!</li>
       }
     </ul>
   }
 
-  <p id="reorder-help" class="visually-hidden">
+  <p id="reorder-help" class="visually-hidden" i18n>
     Drag the handle, or focus it and use the up and down arrow keys, to reorder tasks.
   </p>
 
@@ -103,11 +104,11 @@
     } @placeholder (minimum 300ms) {
       <div class="stats-skeleton" aria-hidden="true"></div>
     } @loading (after 150ms; minimum 400ms) {
-      <p class="status">Loading statistics…</p>
+      <p class="status" i18n>Loading statistics…</p>
     } @error {
-      <p class="status error" role="alert">Could not load the statistics.</p>
+      <p class="status error" role="alert" i18n>Could not load the statistics.</p>
     }
   </ng-container>
 
-  <p class="note">Your tasks are saved in this browser only.</p>
+  <p class="note" i18n>Your tasks are saved in this browser only.</p>
 </section>

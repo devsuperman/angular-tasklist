@@ -28,7 +28,7 @@ export class PersistenceService {
         this.repository.save(data);
       } catch (error) {
         if (!(error instanceof StorageFullError)) throw error;
-        this.toast.error('Your browser storage is full. The last change was not saved.');
+        this.toast.error($localize`Your browser storage is full. The last change was not saved.`);
       }
     });
 

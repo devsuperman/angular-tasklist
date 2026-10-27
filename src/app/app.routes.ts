@@ -8,12 +8,12 @@ export const routes: Routes = [
   },
   {
     path: 'projects',
-    title: 'Projects',
+    title: $localize`Projects`,
     loadComponent: () => import('./features/projects/projects-page').then((m) => m.ProjectsPage),
   },
   {
     path: '**',
-    title: 'Page not found',
+    title: $localize`Page not found`,
     loadComponent: () => import('./features/not-found/not-found-page').then((m) => m.NotFoundPage),
   },
 ];

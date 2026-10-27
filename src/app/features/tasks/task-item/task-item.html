@@ -3,7 +3,7 @@
   <input
     type="checkbox"
     [checked]="t.done"
-    [attr.aria-label]="'Done: ' + t.title"
+    [attr.aria-label]="doneLabel()"
     (change)="toggleDone.emit(t.id)"
   />
 
@@ -24,15 +24,10 @@
       {{ t.dueDate | relativeDate }}
     </time>
   } @else {
-    <span class="due none">No due date</span>
+    <span class="due none" i18n>No due date</span>
   }
 
-  <button
-    type="button"
-    class="icon"
-    [attr.aria-label]="'Delete ' + t.title"
-    (click)="remove.emit(t.id)"
-  >
+  <button type="button" class="icon" [attr.aria-label]="deleteLabel()" (click)="remove.emit(t.id)">
     ✕
   </button>
 </article>

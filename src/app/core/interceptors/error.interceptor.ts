@@ -10,8 +10,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       if (error instanceof HttpErrorResponse) {
         toast.error(
           error.status === 0
-            ? 'You seem to be offline. Could not load the demo data.'
-            : `Could not load the demo data (error ${error.status}).`,
+            ? $localize`You seem to be offline. Could not load the demo data.`
+            : $localize`Could not load the demo data (error ${error.status}:status:).`,
         );
       }
       return throwError(() => error); // the caller (or the resource) still sees the error

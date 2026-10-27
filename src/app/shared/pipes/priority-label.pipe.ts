@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Priority } from '../../core/models/task';
 
 export const PRIORITY_LABELS: Record<Priority, string> = {
-  low: 'Low',
-  medium: 'Medium',
-  high: 'High',
+  low: $localize`:Task priority:Low`,
+  medium: $localize`:Task priority:Medium`,
+  high: $localize`:Task priority:High`,
 };
 
 @Pipe({ name: 'priorityLabel' })

@@ -87,6 +87,10 @@ export class TaskListComponent {
       );
   });
 
+  protected reorderLabel(task: Task): string {
+    return $localize`Reorder ${task.title}:title:`;
+  }
+
   protected projectOf(projectId: string): Project | undefined {
     return this.projectsById().get(projectId);
   }
@@ -105,9 +109,9 @@ export class TaskListComponent {
     if (!task) return;
     this.confirm
       .confirm({
-        title: 'Delete task?',
-        message: `"${task.title}" will be deleted. This cannot be undone.`,
-        confirmLabel: 'Delete',
+        title: $localize`Delete task?`,
+        message: $localize`"${task.title}:title:" will be deleted. This cannot be undone.`,
+        confirmLabel: $localize`Delete`,
       })
       .subscribe((confirmed) => {
         if (confirmed) this.store.remove(id);

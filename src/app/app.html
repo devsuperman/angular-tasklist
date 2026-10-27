@@ -1,11 +1,13 @@
 <app-loading-bar />
-<a class="skip-link" href="#main-content" (click)="skipToMain($event)">Skip to content</a>
+<a class="skip-link" href="#main-content" (click)="skipToMain($event)" i18n>Skip to content</a>
 
 <header class="app-header">
   <h1>{{ title() }}</h1>
-  <nav aria-label="Main">
-    <a routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
-    <a routerLink="/projects" routerLinkActive="active" ariaCurrentWhenActive="page">Projects</a>
+  <nav aria-label="Main" i18n-aria-label>
+    <a routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page" i18n>Tasks</a>
+    <a routerLink="/projects" routerLinkActive="active" ariaCurrentWhenActive="page" i18n
+      >Projects</a
+    >
   </nav>
   <button
     type="button"
@@ -13,8 +15,17 @@
     [attr.aria-pressed]="theme() === 'dark'"
     (click)="toggleTheme()"
   >
-    {{ theme() === 'dark' ? '☀️' : '🌙' }} Dark mode
+    <span aria-hidden="true">{{ theme() === 'dark' ? '☀️' : '🌙' }}</span>
+    <ng-container i18n>Dark mode</ng-container>
   </button>
+  <label class="visually-hidden" for="language" i18n>Language</label>
+  <select id="language" class="language" (change)="changeLocale(language.value)" #language>
+    @for (option of locales; track option.id) {
+      <option [value]="option.id" [selected]="option.id === locale" [attr.lang]="option.id">
+        {{ option.label }}
+      </option>
+    }
+  </select>
 </header>
 
 <main id="main-content" tabindex="-1">

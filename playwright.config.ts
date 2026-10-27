@@ -18,7 +18,10 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: `npm run build:pages && node e2e/serve-pages.mjs ${port}`,
+    // In CI the workflow has already run build:pages, so only serve it
+    command: process.env['E2E_SKIP_BUILD']
+      ? `node e2e/serve-pages.mjs ${port}`
+      : `npm run build:pages && node e2e/serve-pages.mjs ${port}`,
     url: `http://localhost:${port}/angular-tasklist/`,
     reuseExistingServer: !process.env['CI'],
     timeout: 180_000,

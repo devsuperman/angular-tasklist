@@ -1,8 +1,12 @@
-<h2>{{ isEdit() ? 'Edit task' : 'New task' }}</h2>
+@if (isEdit()) {
+  <h2 i18n>Edit task</h2>
+} @else {
+  <h2 i18n>New task</h2>
+}
 
 <form class="task-form" [formGroup]="form" (ngSubmit)="save()" novalidate>
   <div class="field">
-    <label for="title">Title</label>
+    <label for="title" i18n>Title</label>
     @let title = form.controls.title;
     <input
       id="title"
@@ -15,20 +19,20 @@
     <p id="title-error" class="error" role="alert">
       @if (title.invalid && title.touched) {
         @if (title.hasError('required')) {
-          The title is required.
+          <ng-container i18n>The title is required.</ng-container>
         } @else if (title.hasError('minlength')) {
-          Use at least 3 characters.
+          <ng-container i18n>Use at least 3 characters.</ng-container>
         } @else if (title.hasError('maxlength')) {
-          Use at most 120 characters.
+          <ng-container i18n>Use at most 120 characters.</ng-container>
         } @else if (title.hasError('titleTaken')) {
-          This project already has a task with this title.
+          <ng-container i18n>This project already has a task with this title.</ng-container>
         }
       }
     </p>
   </div>
 
   <div class="field">
-    <label for="description">Description</label>
+    <label for="description" i18n>Description</label>
     <textarea id="description" formControlName="description" rows="3"></textarea>
   </div>
 
@@ -36,7 +40,7 @@
 
   <div class="row">
     <div class="field">
-      <label for="dueDate">Due date</label>
+      <label for="dueDate" i18n>Due date</label>
       <input
         id="dueDate"
         type="date"
@@ -48,15 +52,15 @@
       <p id="due-hint" class="hint">{{ form.controls.dueDate.value | relativeDate }}</p>
       <p id="due-error" class="error" role="alert">
         @if (form.controls.dueDate.hasError('pastDate')) {
-          The due date cannot be in the past.
+          <ng-container i18n>The due date cannot be in the past.</ng-container>
         } @else if (form.hasError('dueDateRequiredForHigh') && form.touched) {
-          A high-priority task needs a due date.
+          <ng-container i18n>A high-priority task needs a due date.</ng-container>
         }
       </p>
     </div>
 
     <div class="field">
-      <label for="projectId">Project</label>
+      <label for="projectId" i18n>Project</label>
       <select id="projectId" formControlName="projectId">
         @for (project of projects(); track project.id) {
           <option [value]="project.id">{{ project.name }}</option>
@@ -66,28 +70,32 @@
   </div>
 
   <fieldset class="tags" formArrayName="tags">
-    <legend>Tags</legend>
+    <legend i18n>Tags</legend>
     @for (tag of tags.controls; track tag; let i = $index) {
       <div class="tag">
-        <input [formControlName]="i" [attr.aria-label]="'Tag ' + (i + 1)" />
-        <button type="button" class="link" (click)="removeTag(i)">
+        <input [formControlName]="i" [attr.aria-label]="tagLabel(i)" />
+        <button type="button" class="link" (click)="removeTag(i)" i18n>
           Remove <span class="visually-hidden">tag {{ i + 1 }}</span>
         </button>
       </div>
     } @empty {
-      <p class="hint">No tags.</p>
+      <p class="hint" i18n>No tags.</p>
     }
-    <button type="button" class="link" (click)="addTag()">Add tag</button>
+    <button type="button" class="link" (click)="addTag()" i18n>Add tag</button>
   </fieldset>
 
   @if (task(); as t) {
-    <p class="hint">Created {{ t.createdAt | date: 'medium' }}</p>
+    <p class="hint" i18n>Created {{ t.createdAt | date: 'medium' }}</p>
   }
 
   <div class="actions">
-    <a routerLink="/tasks">Cancel</a>
+    <a routerLink="/tasks" i18n>Cancel</a>
     <button type="submit" [disabled]="form.invalid || form.pending">
-      {{ isEdit() ? 'Save' : 'Create' }}
+      @if (isEdit()) {
+        <ng-container i18n>Save</ng-container>
+      } @else {
+        <ng-container i18n>Create</ng-container>
+      }
     </button>
   </div>
 </form>

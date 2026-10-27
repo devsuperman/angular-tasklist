@@ -1,5 +1,5 @@
 import { DatePipe, TitleCasePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Project } from '../../../core/models/project';
 import { Task } from '../../../core/models/task';
@@ -27,4 +27,8 @@ export class TaskItemComponent {
 
   readonly toggleDone = output<string>();
   readonly remove = output<string>();
+
+  // Built in code: translated attributes with interpolation are not applied to aria-* attributes
+  protected readonly doneLabel = computed(() => $localize`Done: ${this.task().title}:title:`);
+  protected readonly deleteLabel = computed(() => $localize`Delete ${this.task().title}:title:`);
 }

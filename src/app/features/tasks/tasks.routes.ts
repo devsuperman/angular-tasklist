@@ -6,16 +6,16 @@ import { TaskListComponent } from './task-list/task-list';
 import { taskResolver } from './task.resolver';
 
 export const TASKS_ROUTES: Routes = [
-  { path: '', title: 'Tasks', component: TaskListComponent },
+  { path: '', title: $localize`Tasks`, component: TaskListComponent },
   {
     path: 'new',
-    title: 'New task',
+    title: $localize`New task`,
     component: TaskFormPage,
     canDeactivate: [unsavedChangesGuard],
   },
   {
     path: ':id',
-    title: 'Edit task',
+    title: $localize`Edit task`,
     component: TaskFormPage,
     canActivate: [taskExistsGuard],
     canDeactivate: [unsavedChangesGuard],

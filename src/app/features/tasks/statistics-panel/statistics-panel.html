@@ -1,25 +1,25 @@
 <section class="stats" aria-labelledby="stats-title">
   <div class="stats-header">
-    <h3 id="stats-title">Done vs. pending per project</h3>
-    <p class="headline">{{ doneRatio() | percent: '1.0-0' }} done</p>
+    <h3 id="stats-title" i18n>Done vs. pending per project</h3>
+    <p class="headline" i18n>{{ doneRatio() | percent: '1.0-0' }} done</p>
   </div>
 
   <ul class="legend" aria-hidden="true">
-    <li><span class="key done"></span>Done</li>
-    <li><span class="key pending"></span>Pending</li>
+    <li><span class="key done"></span><ng-container i18n>Done</ng-container></li>
+    <li><span class="key pending"></span><ng-container i18n>Pending</ng-container></li>
   </ul>
 
   @if (rows().length) {
     <table>
-      <caption class="visually-hidden">
+      <caption class="visually-hidden" i18n>
         Done and pending tasks per project
       </caption>
       <thead>
         <tr>
-          <th scope="col"><span class="visually-hidden">Project</span></th>
-          <th scope="col"><span class="visually-hidden">Chart</span></th>
-          <th scope="col" class="value">Done</th>
-          <th scope="col" class="value">Pending</th>
+          <th scope="col"><span class="visually-hidden" i18n>Project</span></th>
+          <th scope="col"><span class="visually-hidden" i18n>Chart</span></th>
+          <th scope="col" class="value" i18n>Done</th>
+          <th scope="col" class="value" i18n>Pending</th>
         </tr>
       </thead>
       <tbody>
@@ -32,14 +32,16 @@
                   <span
                     class="bar done"
                     [style.flex-basis.%]="(row.done / max()) * 100"
-                    [title]="row.name + ': ' + row.done + ' done'"
+                    title="{{ row.name }}: {{ row.done }} done"
+                    i18n-title
                   ></span>
                 }
                 @if (row.pending) {
                   <span
                     class="bar pending"
                     [style.flex-basis.%]="(row.pending / max()) * 100"
-                    [title]="row.name + ': ' + row.pending + ' pending'"
+                    title="{{ row.name }}: {{ row.pending }} pending"
+                    i18n-title
                   ></span>
                 }
               </div>
@@ -51,6 +53,6 @@
       </tbody>
     </table>
   } @else {
-    <p class="empty">Add tasks to see statistics.</p>
+    <p class="empty" i18n>Add tasks to see statistics.</p>
   }
 </section>

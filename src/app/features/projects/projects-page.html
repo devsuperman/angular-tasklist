@@ -1,4 +1,4 @@
-<h2>Projects</h2>
+<h2 i18n>Projects</h2>
 
 <app-card>
   <app-project-form (saved)="add($event)" />
@@ -18,10 +18,16 @@
         <span class="swatch" [style.background]="project.color" aria-hidden="true"></span>
         <span class="name">{{ project.name }}</span>
         <span class="count">
-          {{ project.taskCount }} tasks
-          <span *appFeatureFlag="'statistics'">· {{ project.doneCount }} done</span>
+          <ng-container i18n>{project.taskCount, plural,
+            =0 {no tasks}
+            =1 {1 task}
+            other {{{ project.taskCount }} tasks}
+          }</ng-container>
+          <span *appFeatureFlag="'statistics'" i18n
+            >· {project.doneCount, plural, other {{{ project.doneCount }} done}}</span
+          >
         </span>
-        <button type="button" class="link" (click)="editingId.set(project.id)">
+        <button type="button" class="link" (click)="editingId.set(project.id)" i18n>
           Rename <span class="visually-hidden">{{ project.name }}</span>
         </button>
         <button
@@ -29,12 +35,13 @@
           class="link danger"
           [disabled]="!canDelete()"
           (click)="remove(project)"
+          i18n
         >
           Delete <span class="visually-hidden">{{ project.name }}</span>
         </button>
       }
     </li>
   } @empty {
-    <li class="empty">No projects yet.</li>
+    <li class="empty" i18n>No projects yet.</li>
   }
 </ul>

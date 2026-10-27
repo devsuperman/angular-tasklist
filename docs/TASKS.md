@@ -171,10 +171,10 @@ Deploying early means every finished phase goes live at https://devsuperman.gith
 
 **Concepts:** i18n, PWA, budgets, CI/CD, static hosting on GitHub Pages.
 
-- [ ] GitHub Actions workflow (`.github/workflows/ci.yml`): lint, test, build on every push and pull request
-- [ ] Check that a deep link (for example `/angular-tasklist/projects`) loads on refresh, once routing exists (Phase 4)
-- [ ] i18n with `$localize`: English and pt-BR (one build per language, or runtime loading; check it works under the Pages base path)
-- [ ] PWA with `ng add @angular/pwa` (check the service worker scope under `/angular-tasklist/`)
-- [ ] Check bundle budgets and analyze the bundle
+- [x] GitHub Actions workflow (`.github/workflows/ci.yml`): lint, test, build on every push and pull request
+- [x] Check that a deep link (for example `/angular-tasklist/projects`) loads on refresh, once routing exists (Phase 4)
+- [x] i18n with `$localize`: English and pt-BR (one build per language, or runtime loading; check it works under the Pages base path). Done with runtime loading: one build
+- [x] PWA with `ng add @angular/pwa` (check the service worker scope under `/angular-tasklist/`)
+- [x] Check bundle budgets and analyze the bundle
 
 **Done when:** every push and pull request runs CI, and the deployed app works offline and in both languages.

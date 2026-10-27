@@ -43,10 +43,10 @@ export class ProjectsPage {
   protected remove(project: Project & { taskCount: number }): void {
     const message =
       project.taskCount > 0
-        ? `Delete "${project.name}" and its ${project.taskCount} tasks?`
-        : `Delete "${project.name}"?`;
+        ? $localize`Delete "${project.name}:name:" and its ${project.taskCount}:count: tasks?`
+        : $localize`Delete "${project.name}:name:"?`;
     this.confirm
-      .confirm({ title: 'Delete project?', message, confirmLabel: 'Delete' })
+      .confirm({ title: $localize`Delete project?`, message, confirmLabel: $localize`Delete` })
       .subscribe((confirmed) => {
         if (!confirmed) return;
         this.taskStore.removeByProject(project.id);

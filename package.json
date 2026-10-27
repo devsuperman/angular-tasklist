@@ -11,7 +11,8 @@
     "lint": "ng lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "i18n": "ng extract-i18n --format json --output-path src/locale && node scripts/i18n.mjs"
   },
   "private": true,
   "packageManager": "npm@10.9.4",
@@ -21,8 +22,10 @@
     "@angular/compiler": "^22.2.0",
     "@angular/core": "^22.2.0",
     "@angular/forms": "^22.2.0",
+    "@angular/localize": "^22.2.3",
     "@angular/platform-browser": "^22.2.0",
     "@angular/router": "^22.2.0",
+    "@angular/service-worker": "^22.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

@@ -5,7 +5,7 @@ import { LoadingService } from '../../../core/services/loading.service';
   selector: 'app-loading-bar',
   template: `
     @if (isLoading()) {
-      <div class="bar" role="progressbar" aria-label="Loading"></div>
+      <div class="bar" role="progressbar" aria-label="Loading" i18n-aria-label></div>
     }
   `,
   styles: `

@@ -2,3 +2,6 @@ package-lock.json
 dist
 .angular
 coverage
+src/locale
+test-results
+playwright-report
