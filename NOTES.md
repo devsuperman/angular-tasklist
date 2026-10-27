@@ -90,3 +90,14 @@ What I learned in each phase.
 - `PriorityLabelPipe` replaced the `@switch` in the badge and in the priority selector. The badge color is now a class binding: `class="badge" [class]="t.priority"`.
 - Built-in pipes: `date` (`'fullDate'` in the due date tooltip, `'medium'` for "Created…") and `titlecase`, chained after `date`. That one earns its place: weekday names are lowercase in Portuguese ("sexta-feira"). Pipes chain left to right: `t.dueDate | date: 'fullDate' : 'UTC' | titlecase`.
 - `'UTC'` in the `date` pipe matters: `'2027-01-15'` is parsed as UTC midnight, so without it a user west of UTC would see January 14.
+
+## Phase 8 — UI polish
+
+- **CDK only, no Material.** `@angular/cdk` gives the behavior (drag and drop, dialog, focus trap, overlay) and the app keeps its own look. The overlay CSS comes from `@use '@angular/cdk/overlay-prebuilt.css'` in `styles.scss`.
+- **Drag and drop:** `cdkDropList` / `cdkDrag` / `cdkDragHandle`. `drop()` copies the visible list, applies `moveItemInArray`, and calls `TaskStore.reorder(ids)`. `reorder` only reshuffles the slots the visible tasks already had, so tasks hidden by a filter stay where they are. The persistence effect saves the new `order`.
+- **Keyboard alternative:** CDK drag and drop has no keyboard support, so the handle is a `<button>` that moves the task with the up and down arrow keys and keeps the focus on itself afterwards. It can be turned off with the `dragAndDrop` flag in `APP_CONFIG`.
+- **Confirmation dialog:** `ConfirmService.confirm()` opens `ConfirmDialogComponent` with the CDK `Dialog` (`role: 'alertdialog'`) and returns `Observable<boolean>`. It is used for deleting tasks and projects, and by `unsavedChangesGuard`, since a guard may return an Observable. Focus trap, Escape and focus restore come from the CDK.
+- **Statistics panel (F9):** `@defer (on viewport)` with `@placeholder (minimum 300ms)`, `@loading (after 150ms; minimum 400ms)` and `@error`, inside `*appFeatureFlag="'statistics'"`. The build output shows a separate `statistics-panel` chunk. The chart is a real `<table>`, so screen readers get the numbers. Its two colors are slots 1 and 2 of a palette checked for color-blind separation and contrast, with a dark-mode step of each.
+- **Theme (F10):** `ThemeService` holds a `signal<Theme>`; an `effect` writes `data-theme` on `<html>` and saves the choice. The first value comes from storage, then `prefers-color-scheme`. Dark mode only redefines the CSS custom properties.
+- **Animations:** `animate.enter="fade-in"` / `animate.leave="fade-out"` on list items (plain CSS classes, no animations package), all switched off under `prefers-reduced-motion`, along with the view transitions.
+- **Accessibility:** a skip link, `:focus-visible` outlines, labels for every control, `aria-pressed` on toggle buttons, and wrapping rows on mobile (375 px wide has no horizontal scroll). Lighthouse accessibility: **100** on `/tasks`, `/projects` and `/tasks/new`.

@@ -1,13 +1,23 @@
 <app-loading-bar />
+<a class="skip-link" href="#main-content" (click)="skipToMain($event)">Skip to content</a>
+
 <header class="app-header">
   <h1>{{ title() }}</h1>
   <nav aria-label="Main">
     <a routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
     <a routerLink="/projects" routerLinkActive="active" ariaCurrentWhenActive="page">Projects</a>
   </nav>
+  <button
+    type="button"
+    class="theme-toggle"
+    [attr.aria-pressed]="theme() === 'dark'"
+    (click)="toggleTheme()"
+  >
+    {{ theme() === 'dark' ? '☀️' : '🌙' }} Dark mode
+  </button>
 </header>
 
-<main>
+<main id="main-content" tabindex="-1">
   <router-outlet />
 </main>
 

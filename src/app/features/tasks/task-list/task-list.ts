@@ -1,24 +1,50 @@
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDragHandle,
+  CdkDropList,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs';
+import { APP_CONFIG } from '../../../core/config/app-config';
 import { Project } from '../../../core/models/project';
+import { Task } from '../../../core/models/task';
+import { ConfirmService } from '../../../core/services/confirm.service';
 import { ProjectStore } from '../../../core/services/project-store';
 import { TaskStore } from '../../../core/services/task-store';
 import { CardComponent } from '../../../shared/components/card/card';
+import { FeatureFlagDirective } from '../../../shared/directives/feature-flag';
 import { AddTaskComponent } from '../add-task/add-task';
 import { FilterBarComponent, StatusFilter } from '../filter-bar/filter-bar';
+import { StatisticsPanelComponent } from '../statistics-panel/statistics-panel';
 import { TaskItemComponent } from '../task-item/task-item';
 
 @Component({
   selector: 'app-task-list',
-  imports: [RouterLink, TaskItemComponent, FilterBarComponent, CardComponent, AddTaskComponent],
+  imports: [
+    RouterLink,
+    CdkDropList,
+    CdkDrag,
+    CdkDragHandle,
+    TaskItemComponent,
+    FilterBarComponent,
+    CardComponent,
+    AddTaskComponent,
+    StatisticsPanelComponent,
+    FeatureFlagDirective,
+  ],
   templateUrl: './task-list.html',
   styleUrl: './task-list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskListComponent {
   private readonly store = inject(TaskStore);
+  private readonly confirm = inject(ConfirmService);
+  protected readonly dragEnabled = inject(APP_CONFIG).features.dragAndDrop;
+  protected readonly tasks = this.store.tasks;
   protected readonly projects = inject(ProjectStore).projects;
 
   protected readonly total = this.store.total;
@@ -75,6 +101,37 @@ export class TaskListComponent {
   }
 
   protected remove(id: string): void {
-    this.store.remove(id);
+    const task = this.store.byId(id);
+    if (!task) return;
+    this.confirm
+      .confirm({
+        title: 'Delete task?',
+        message: `"${task.title}" will be deleted. This cannot be undone.`,
+        confirmLabel: 'Delete',
+      })
+      .subscribe((confirmed) => {
+        if (confirmed) this.store.remove(id);
+      });
+  }
+
+  protected drop(event: CdkDragDrop<Task[]>): void {
+    this.move(event.previousIndex, event.currentIndex);
+  }
+
+  /** Keyboard alternative to dragging: arrow keys on the handle move the task. */
+  protected moveBy(task: Task, delta: number, handle: HTMLElement): void {
+    const from = this.visibleTasks().indexOf(task);
+    const to = from + delta;
+    if (from < 0 || to < 0 || to >= this.visibleTasks().length) return;
+    this.move(from, to);
+    // The row is re-rendered in its new place; keep the focus on its handle
+    queueMicrotask(() => handle.focus());
+  }
+
+  private move(from: number, to: number): void {
+    if (from === to) return;
+    const tasks = [...this.visibleTasks()]; // copy: never mutate signal values
+    moveItemInArray(tasks, from, to);
+    this.store.reorder(tasks.map((t) => t.id)); // the store sets `order`, persistence saves it
   }
 }

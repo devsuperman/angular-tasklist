@@ -1,0 +1,56 @@
+<section class="stats" aria-labelledby="stats-title">
+  <div class="stats-header">
+    <h3 id="stats-title">Done vs. pending per project</h3>
+    <p class="headline">{{ doneRatio() | percent: '1.0-0' }} done</p>
+  </div>
+
+  <ul class="legend" aria-hidden="true">
+    <li><span class="key done"></span>Done</li>
+    <li><span class="key pending"></span>Pending</li>
+  </ul>
+
+  @if (rows().length) {
+    <table>
+      <caption class="visually-hidden">
+        Done and pending tasks per project
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col"><span class="visually-hidden">Project</span></th>
+          <th scope="col"><span class="visually-hidden">Chart</span></th>
+          <th scope="col" class="value">Done</th>
+          <th scope="col" class="value">Pending</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows(); track row.id) {
+          <tr>
+            <th scope="row">{{ row.name }}</th>
+            <td class="chart" aria-hidden="true">
+              <div class="track">
+                @if (row.done) {
+                  <span
+                    class="bar done"
+                    [style.flex-basis.%]="(row.done / max()) * 100"
+                    [title]="row.name + ': ' + row.done + ' done'"
+                  ></span>
+                }
+                @if (row.pending) {
+                  <span
+                    class="bar pending"
+                    [style.flex-basis.%]="(row.pending / max()) * 100"
+                    [title]="row.name + ': ' + row.pending + ' pending'"
+                  ></span>
+                }
+              </div>
+            </td>
+            <td class="value">{{ row.done }}</td>
+            <td class="value">{{ row.pending }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <p class="empty">Add tasks to see statistics.</p>
+  }
+</section>

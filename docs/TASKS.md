@@ -143,12 +143,12 @@ Deploying early means every finished phase goes live at https://devsuperman.gith
 
 **Concepts:** Angular CDK, Angular Material, `@defer`, animations, accessibility.
 
-- [ ] Reorder tasks with CDK drag and drop, and save `order` to storage
-- [ ] Confirmation dialog before delete (Material dialog or CDK overlay)
-- [ ] Statistics panel inside `@defer (on viewport)` with `@placeholder` and `@loading`
-- [ ] Dark/light theme toggle backed by a signal and saved to storage
-- [ ] Responsive layout for mobile
-- [ ] Accessibility pass: labels, keyboard navigation, focus states
+- [x] Reorder tasks with CDK drag and drop, and save `order` to storage
+- [x] Confirmation dialog before delete (Material dialog or CDK overlay)
+- [x] Statistics panel inside `@defer (on viewport)` with `@placeholder` and `@loading`
+- [x] Dark/light theme toggle backed by a signal and saved to storage
+- [x] Responsive layout for mobile
+- [x] Accessibility pass: labels, keyboard navigation, focus states
 
 **Done when:** Lighthouse accessibility is above 90.
 

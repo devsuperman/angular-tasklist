@@ -30,8 +30,22 @@ nav {
   }
 }
 
+.theme-toggle {
+  margin-left: auto;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.375rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
 main {
   max-width: 48rem;
   margin: 0 auto;
   padding: 1rem;
+
+  &:focus {
+    outline: none;
+  }
 }

@@ -63,9 +63,23 @@
         Could not load the demo data. You can still add tasks.
       </p>
     }
-    <ul>
+    <ul cdkDropList [cdkDropListDisabled]="!dragEnabled" (cdkDropListDropped)="drop($event)">
       @for (task of visibleTasks(); track task.id) {
-        <li>
+        <li cdkDrag [cdkDragData]="task" animate.enter="fade-in" animate.leave="fade-out">
+          @if (dragEnabled) {
+            <button
+              type="button"
+              class="handle"
+              cdkDragHandle
+              #handle
+              [attr.aria-label]="'Reorder ' + task.title"
+              aria-describedby="reorder-help"
+              (keydown.arrowup)="$event.preventDefault(); moveBy(task, -1, handle)"
+              (keydown.arrowdown)="$event.preventDefault(); moveBy(task, 1, handle)"
+            >
+              ⠿
+            </button>
+          }
           <app-task-item
             [task]="task"
             [project]="projectOf(task.projectId)"
@@ -78,6 +92,22 @@
       }
     </ul>
   }
+
+  <p id="reorder-help" class="visually-hidden">
+    Drag the handle, or focus it and use the up and down arrow keys, to reorder tasks.
+  </p>
+
+  <ng-container *appFeatureFlag="'statistics'">
+    @defer (on viewport) {
+      <app-statistics-panel [tasks]="tasks()" [projects]="projects()" />
+    } @placeholder (minimum 300ms) {
+      <div class="stats-skeleton" aria-hidden="true"></div>
+    } @loading (after 150ms; minimum 400ms) {
+      <p class="status">Loading statistics…</p>
+    } @error {
+      <p class="status error" role="alert">Could not load the statistics.</p>
+    }
+  </ng-container>
 
   <p class="note">Your tasks are saved in this browser only.</p>
 </section>

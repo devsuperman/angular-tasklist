@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { Project } from '../../core/models/project';
+import { ConfirmService } from '../../core/services/confirm.service';
 import { ProjectStore } from '../../core/services/project-store';
 import { TaskStore } from '../../core/services/task-store';
 import { CardComponent } from '../../shared/components/card/card';
@@ -16,6 +17,7 @@ import { ProjectFormComponent } from './project-form/project-form';
 export class ProjectsPage {
   private readonly projectStore = inject(ProjectStore);
   private readonly taskStore = inject(TaskStore);
+  private readonly confirm = inject(ConfirmService);
 
   protected readonly editingId = signal<string | null>(null);
 
@@ -43,8 +45,12 @@ export class ProjectsPage {
       project.taskCount > 0
         ? `Delete "${project.name}" and its ${project.taskCount} tasks?`
         : `Delete "${project.name}"?`;
-    if (!confirm(message)) return;
-    this.taskStore.removeByProject(project.id);
-    this.projectStore.remove(project.id);
+    this.confirm
+      .confirm({ title: 'Delete project?', message, confirmLabel: 'Delete' })
+      .subscribe((confirmed) => {
+        if (!confirmed) return;
+        this.taskStore.removeByProject(project.id);
+        this.projectStore.remove(project.id);
+      });
   }
 }

@@ -61,6 +61,19 @@ export class TaskStore {
     this._tasks.update((tasks) => tasks.filter((t) => t.projectId !== projectId));
   }
 
+  /**
+   * Saves a new order for some tasks (for example the visible ones after a drag and drop).
+   * The tasks keep the slots they had in the full list, so hidden tasks do not move.
+   */
+  reorder(ids: string[]): void {
+    const tasks = this._tasks();
+    const moving = new Set(ids);
+    const byId = new Map(tasks.map((t) => [t.id, t]));
+    const queue = ids.filter((id) => byId.has(id));
+    const next = tasks.map((t) => (moving.has(t.id) ? byId.get(queue.shift()!)! : t));
+    this._tasks.set(next.map((t, order) => (t.order === order ? t : { ...t, order })));
+  }
+
   /** Replaces the whole list, for example with changes made in another tab. */
   replaceAll(tasks: Task[]): void {
     this._tasks.set(sortByOrder(tasks));

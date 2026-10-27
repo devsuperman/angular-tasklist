@@ -1,4 +1,6 @@
 /* Global styles: design tokens and base elements. Component styles live next to each component. */
+@use '@angular/cdk/overlay-prebuilt.css';
+
 :root {
   --color-bg: #f8fafc;
   --color-surface: #ffffff;
@@ -15,6 +17,24 @@
   --color-low: #166534;
   --color-low-bg: #dcfce7;
   color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f1f5f9;
+  --color-muted: #cbd5e1;
+  --color-border: #475569;
+  --color-primary: #60a5fa;
+  --color-on-primary: #0f172a;
+  --color-danger: #f87171;
+  --color-high: #fecaca;
+  --color-high-bg: #7f1d1d;
+  --color-medium: #fef08a;
+  --color-medium-bg: #713f12;
+  --color-low: #bbf7d0;
+  --color-low-bg: #14532d;
+  color-scheme: dark;
 }
 
 body {
@@ -69,4 +89,83 @@ button[type='submit'],
 /* Set by HighlightOverdueDirective, on elements of several components */
 .overdue {
   border-left: 4px solid var(--color-danger) !important;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: 1rem;
+  z-index: 1001;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+
+  &:focus {
+    top: 0.5rem;
+  }
+}
+
+/* CDK dialog backdrop and drag and drop */
+.dialog-backdrop {
+  background: rgb(0 0 0 / 45%);
+}
+
+.cdk-drag-preview {
+  box-shadow: 0 8px 20px rgb(0 0 0 / 25%);
+  border-radius: 0.5rem;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.3;
+}
+
+.cdk-drop-list-dragging .cdk-drag:not(.cdk-drag-placeholder) {
+  transition: transform 200ms ease;
+}
+
+/* Used with animate.enter / animate.leave */
+.fade-in {
+  animation: fade-in 150ms ease-out;
+}
+
+.fade-out {
+  animation: fade-out 150ms ease-in;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .fade-out,
+  .cdk-drop-list-dragging .cdk-drag {
+    animation: none;
+    transition: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
