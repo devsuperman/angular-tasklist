@@ -79,14 +79,14 @@ Deploying early means every finished phase goes live at https://devsuperman.gith
 
 **Concepts:** `provideRouter`, `routerLink`, `routerLinkActive`, `withComponentInputBinding()`, lazy loading, functional guards, resolvers, wildcard route, `withViewTransitions()`.
 
-- [ ] Set up the routes listed in TECH_STACK.md
-- [ ] Lazy load `tasks` and `projects` with `loadChildren` / `loadComponent`
-- [ ] Redirect `''` to `/tasks`
-- [ ] `taskExistsGuard` (functional `canActivate`) that redirects to `/tasks` when the id is unknown
-- [ ] `/tasks/:id` gets `id` as a component input
-- [ ] Resolver that loads the task before the detail page opens
-- [ ] 404 page for `**`
-- [ ] Navigation header with `routerLinkActive`
+- [x] Set up the routes listed in TECH_STACK.md
+- [x] Lazy load `tasks` and `projects` with `loadChildren` / `loadComponent`
+- [x] Redirect `''` to `/tasks`
+- [x] `taskExistsGuard` (functional `canActivate`) that redirects to `/tasks` when the id is unknown
+- [x] `/tasks/:id` gets `id` as a component input
+- [x] Resolver that loads the task before the detail page opens
+- [x] 404 page for `**`
+- [x] Navigation header with `routerLinkActive`
 
 **Done when:** deep links work, and the network tab shows the lazy chunks loading.
 

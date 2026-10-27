@@ -1,7 +1,11 @@
 <header class="app-header">
   <h1>{{ title() }}</h1>
+  <nav aria-label="Main">
+    <a routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
+    <a routerLink="/projects" routerLinkActive="active" ariaCurrentWhenActive="page">Projects</a>
+  </nav>
 </header>
 
 <main>
-  <app-task-list />
+  <router-outlet />
 </main>

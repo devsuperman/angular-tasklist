@@ -1,0 +1,9 @@
+<h2>{{ isEdit() ? 'Edit task' : 'New task' }}</h2>
+
+@if (task(); as t) {
+  <p>
+    Editing <strong>{{ t.title }}</strong> ({{ id() }}).
+  </p>
+}
+
+<a routerLink="/tasks">Back to the list</a>

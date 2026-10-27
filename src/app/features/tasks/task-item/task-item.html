@@ -7,7 +7,7 @@
     (change)="toggleDone.emit(t.id)"
   />
 
-  <span class="title">{{ t.title }}</span>
+  <a class="title" [routerLink]="['/tasks', t.id]">{{ t.title }}</a>
 
   @switch (t.priority) {
     @case ('high') {

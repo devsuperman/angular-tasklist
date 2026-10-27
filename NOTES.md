@@ -41,3 +41,14 @@ What I learned in each phase.
 - For now each store saves its own key with an `effect`, so tasks survive a reload. Phase 6 replaces this with a repository and one versioned key.
 - The app test broke with `NG0201: No provider found for StorageService`. An abstract class has no `providedIn`, so every injector that needs it (including `TestBed`) must provide it. The test now uses `MemoryStorageService`.
 - `core/services/di-scopes.spec.ts` shows provider scopes: with `providedIn: 'root'` two components share one instance; with `providers: [CounterService]` in the component, each instance gets its own.
+
+## Phase 4 — Routing
+
+- `app.routes.ts`: `''` redirects to `tasks` (`pathMatch: 'full'`, or every URL would match the empty prefix). `tasks` uses `loadChildren` (a lazy group of routes in `tasks.routes.ts`); `projects` and `**` use `loadComponent`. The build output shows one lazy chunk per route group.
+- `withComponentInputBinding()` passes route params and resolver data to component inputs: `TaskFormPage` gets `id` from `/tasks/:id` and `task` from the resolver's `task` key.
+- `taskExistsGuard` is a plain function (`CanActivateFn`). It returns `true` or a `UrlTree`; returning `router.createUrlTree(['/tasks'])` redirects without a separate `navigate()` call.
+- `taskResolver` (`ResolveFn<Task | undefined>`) reads the task from the store before the page opens.
+- `withViewTransitions()` animates route changes with the browser's View Transitions API (and does nothing where it is not supported).
+- The header uses `routerLinkActive="active"` plus `ariaCurrentWhenActive="page"`, so screen readers also know which link is current.
+- Every route has a `title`; the router sets `document.title` from it.
+- The app test now needs `provideRouter([])` because the header uses `RouterLink`.

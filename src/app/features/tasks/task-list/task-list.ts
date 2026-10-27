@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ProjectStore } from '../../../core/services/project-store';
 import { TaskStore } from '../../../core/services/task-store';
 import { CardComponent } from '../../../shared/components/card/card';
@@ -8,7 +9,7 @@ import { TaskItemComponent } from '../task-item/task-item';
 
 @Component({
   selector: 'app-task-list',
-  imports: [TaskItemComponent, FilterBarComponent, CardComponent, AddTaskComponent],
+  imports: [RouterLink, TaskItemComponent, FilterBarComponent, CardComponent, AddTaskComponent],
   templateUrl: './task-list.html',
   styleUrl: './task-list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
