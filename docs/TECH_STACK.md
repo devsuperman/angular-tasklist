@@ -111,9 +111,9 @@ interface StoredData {
 
 ## Deployment (GitHub Pages)
 
-- The site is served at `https://devsuperman.github.io/angular-tasklist/`, so the CI build uses `ng build --base-href /angular-tasklist/`. Local development keeps `<base href="/">`.
+- The site is served at `https://devsuperman.github.io/angular-tasklist/`, so the deploy build uses `npm run build:pages` (`ng build --base-href /angular-tasklist/`). Local development keeps `<base href="/">`.
 - GitHub Pages has no SPA fallback. After the build, copy `index.html` to `404.html` so deep links like `/tasks/123` load the app on refresh.
-- The workflow `.github/workflows/deploy.yml` runs on push to `main`: `npm ci` → lint → test → build → upload `dist/angular-tasklist/browser` → `actions/deploy-pages`.
+- The workflow `.github/workflows/deploy.yml` runs on push to `main` (or manually): `npm ci` → lint → test → `build:pages` → upload `dist/angular-tasklist/browser` → `actions/deploy-pages`.
 - In the repo settings, **Pages → Source** must be set to **GitHub Actions**.
 
 ## Conventions

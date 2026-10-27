@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:pages": "ng build --base-href /angular-tasklist/ && node -e \"require('fs').copyFileSync('dist/angular-tasklist/browser/index.html', 'dist/angular-tasklist/browser/404.html')\"",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",

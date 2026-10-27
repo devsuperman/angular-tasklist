@@ -20,6 +20,19 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 
 **Done when:** `ng serve`, `ng test` and `ng lint` all work.
 
+### Phase 0.5 — Deploy to GitHub Pages
+
+**Concepts:** static hosting, `--base-href`, SPA fallback, GitHub Actions.
+
+Deploying early means every finished phase goes live at https://devsuperman.github.io/angular-tasklist/.
+
+- [x] Add `"build:pages"`: `ng build --base-href /angular-tasklist/`, then copy `index.html` to `404.html`
+- [x] Deploy workflow (`.github/workflows/deploy.yml`) to GitHub Pages on push to `main` (see "Deployment" in TECH_STACK.md)
+- [x] Add the demo link and a deploy badge to `README.md`
+- [ ] Set **Settings → Pages → Source** to **GitHub Actions**
+
+**Done when:** a push to `main` updates https://devsuperman.github.io/angular-tasklist/.
+
 ### Phase 1 — Components and templates (F1)
 
 **Concepts:** standalone components, interpolation, property/event binding, `@if`, `@for` with `track`, `@switch`, `@let`, class/style bindings, component styles.
@@ -159,13 +172,9 @@ Workflow for each phase: read the matching guide on angular.dev → create a `ph
 **Concepts:** i18n, PWA, budgets, CI/CD, static hosting on GitHub Pages.
 
 - [ ] GitHub Actions workflow (`.github/workflows/ci.yml`): lint, test, build on every push and pull request
-- [ ] Deploy workflow (`.github/workflows/deploy.yml`) to GitHub Pages on push to `main` (see "Deployment" in TECH_STACK.md)
-- [ ] Add `"build:pages": "ng build --base-href /angular-tasklist/"` and copy `index.html` to `404.html` after the build
-- [ ] Set **Settings → Pages → Source** to **GitHub Actions**
-- [ ] Check that a deep link (for example `/angular-tasklist/projects`) loads on refresh
+- [ ] Check that a deep link (for example `/angular-tasklist/projects`) loads on refresh, once routing exists (Phase 4)
 - [ ] i18n with `$localize`: English and pt-BR (one build per language, or runtime loading; check it works under the Pages base path)
 - [ ] PWA with `ng add @angular/pwa` (check the service worker scope under `/angular-tasklist/`)
 - [ ] Check bundle budgets and analyze the bundle
-- [ ] Add the demo link and a deploy badge to `README.md`
 
-**Done when:** every push runs CI, and every push to `main` updates https://devsuperman.github.io/angular-tasklist/.
+**Done when:** every push and pull request runs CI, and the deployed app works offline and in both languages.
