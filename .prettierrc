@@ -7,6 +7,12 @@
       "options": {
         "parser": "angular"
       }
+    },
+    {
+      "files": "docs/learn/*.md",
+      "options": {
+        "embeddedLanguageFormatting": "off"
+      }
     }
   ]
 }

@@ -2,7 +2,7 @@
 
 The work split into phases. Each phase covers one group of Angular concepts and ends with something that runs. Feature IDs (F1, F2, ...) refer to [BUSINESS_PLAN.md](BUSINESS_PLAN.md); technical decisions are in [TECH_STACK.md](TECH_STACK.md).
 
-Workflow for each phase: read the matching guide on angular.dev → create a `phase-XX-...` branch → do the tasks → write what you learned in `NOTES.md` → open a pull request.
+Workflow for each phase: read the matching chapter in [docs/learn](learn/README.md) and the guide on angular.dev → create a `phase-XX-...` branch → do the tasks → write what you learned in `NOTES.md` → open a pull request.
 
 ---
 
