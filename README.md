@@ -20,7 +20,8 @@ Requires Node.js 22.22.3+ or 24.15+ (see `.nvmrc`).
 ```bash
 npm install
 npm start              # dev server at http://localhost:4200
-npm test               # unit tests (Vitest)
+npm test               # unit and component tests (Vitest)
+npm run e2e            # end-to-end tests (Playwright) against the GitHub Pages build
 npm run lint           # ESLint (angular-eslint)
 npm run format         # Prettier
 npm run build          # production build in dist/

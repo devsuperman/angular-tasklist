@@ -101,3 +101,15 @@ What I learned in each phase.
 - **Theme (F10):** `ThemeService` holds a `signal<Theme>`; an `effect` writes `data-theme` on `<html>` and saves the choice. The first value comes from storage, then `prefers-color-scheme`. Dark mode only redefines the CSS custom properties.
 - **Animations:** `animate.enter="fade-in"` / `animate.leave="fade-out"` on list items (plain CSS classes, no animations package), all switched off under `prefers-reduced-motion`, along with the view transitions.
 - **Accessibility:** a skip link, `:focus-visible` outlines, labels for every control, `aria-pressed` on toggle buttons, and wrapping rows on mobile (375 px wide has no horizontal scroll). Lighthouse accessibility: **100** on `/tasks`, `/projects` and `/tasks/new`.
+
+## Phase 9 — Testing
+
+- **53 unit and component tests** (Vitest via `ng test`) in 12 files:
+  - `TaskStore`: add, toggle, counters, overdue, update, remove, `removeByProject`, `reorder` (hidden tasks keep their slots), loading the seed with `HttpTestingController`, a failed seed, and a seed with the wrong shape;
+  - `DataRepository`: round trip with the version, `null` for invalid JSON, missing version and broken tasks (`it.each`), and `StorageFullError` from a `QuotaExceededError`;
+  - pipes, validators (`notInThePast` with `vi.useFakeTimers`, the cross-field and async validators), `taskExistsGuard`, both interceptors, `FeatureFlagDirective`, and the provider scopes from Phase 3;
+  - components: `TaskItemComponent` (inputs with `componentRef.setInput`, outputs with `subscribe`, the overdue class) and `TaskFormPage` (messages, async validator, create, edit and `hasUnsavedChanges`).
+- Every test that touches storage gets `MemoryStorageService` and a test `APP_CONFIG`, so tests never read or write real `localStorage`.
+- `RelativeDatePipe` calls `inject(LOCALE_ID)`, so its test creates it inside `TestBed.runInInjectionContext`. That made a `pt-BR` test easy: `'amanhã'`.
+- Seed loading: `TestBed.tick()` lets the resource send its request, `http.expectOne('seed.json').flush(...)` answers it, and `ApplicationRef.whenStable()` waits for the value to land.
+- **E2E (Playwright):** `npm run e2e` builds with `build:pages` and serves `dist/` under `/angular-tasklist/` with a tiny server that answers unknown paths with `404.html` and status 404, just like GitHub Pages. The tests cover the first visit (seed), create → done → reload → still done → delete (through the dialog), deep links on refresh, and the debounced search.

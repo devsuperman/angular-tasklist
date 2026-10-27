@@ -156,10 +156,10 @@ Deploying early means every finished phase goes live at https://devsuperman.gith
 
 **Concepts:** `TestBed`, testing signals, component harnesses, `provideHttpClientTesting` / `HttpTestingController`, Playwright.
 
-- [ ] Unit tests: `TaskStore`, repositories (with an in-memory `StorageService`), `relativeDate` pipe, `taskExistsGuard`, error interceptor
-- [ ] Component tests: `TaskItemComponent` (inputs and outputs), task form (validation)
-- [ ] Seed loading test with `HttpTestingController`
-- [ ] E2E: create a task → mark it done → reload and check it is still done → delete it
+- [x] Unit tests: `TaskStore`, repositories (with an in-memory `StorageService`), `relativeDate` pipe, `taskExistsGuard`, error interceptor
+- [x] Component tests: `TaskItemComponent` (inputs and outputs), task form (validation)
+- [x] Seed loading test with `HttpTestingController`
+- [x] E2E: create a task → mark it done → reload and check it is still done → delete it
 
 **Done when:** `ng test` and the e2e suite pass.
 
