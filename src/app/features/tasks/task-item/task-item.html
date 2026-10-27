@@ -1,5 +1,5 @@
 @let t = task();
-<article class="task" [class.done]="t.done">
+<article class="task" [class.done]="t.done" [appHighlightOverdue]="t.dueDate" [done]="t.done">
   <input
     type="checkbox"
     [checked]="t.done"
@@ -13,20 +13,16 @@
     <span class="project"><span class="dot" [style.background]="p.color"></span>{{ p.name }}</span>
   }
 
-  @switch (t.priority) {
-    @case ('high') {
-      <span class="badge high">High</span>
-    }
-    @case ('medium') {
-      <span class="badge medium">Medium</span>
-    }
-    @case ('low') {
-      <span class="badge low">Low</span>
-    }
-  }
+  <span class="badge" [class]="t.priority">{{ t.priority | priorityLabel }}</span>
 
   @if (t.dueDate) {
-    <time class="due" [attr.datetime]="t.dueDate">{{ t.dueDate }}</time>
+    <time
+      class="due"
+      [attr.datetime]="t.dueDate"
+      [title]="t.dueDate | date: 'fullDate' : 'UTC' | titlecase"
+    >
+      {{ t.dueDate | relativeDate }}
+    </time>
   } @else {
     <span class="due none">No due date</span>
   }

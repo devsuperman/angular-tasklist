@@ -8,6 +8,7 @@
       id="title"
       formControlName="title"
       autocomplete="off"
+      appAutofocus
       [attr.aria-invalid]="title.invalid && title.touched"
       aria-describedby="title-error"
     />
@@ -36,7 +37,15 @@
   <div class="row">
     <div class="field">
       <label for="dueDate">Due date</label>
-      <input id="dueDate" type="date" formControlName="dueDate" aria-describedby="due-error" />
+      <input
+        id="dueDate"
+        type="date"
+        formControlName="dueDate"
+        aria-describedby="due-hint due-error"
+        [appHighlightOverdue]="form.controls.dueDate.value"
+        [done]="task()?.done ?? false"
+      />
+      <p id="due-hint" class="hint">{{ form.controls.dueDate.value | relativeDate }}</p>
       <p id="due-error" class="error" role="alert">
         @if (form.controls.dueDate.hasError('pastDate')) {
           The due date cannot be in the past.
@@ -70,6 +79,10 @@
     }
     <button type="button" class="link" (click)="addTag()">Add tag</button>
   </fieldset>
+
+  @if (task(); as t) {
+    <p class="hint">Created {{ t.createdAt | date: 'medium' }}</p>
+  }
 
   <div class="actions">
     <a routerLink="/tasks">Cancel</a>

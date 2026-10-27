@@ -80,3 +80,13 @@ What I learned in each phase.
 - **Tabs in sync.** `fromEvent(window, 'storage')` + `filter` + `takeUntilDestroyed`. The event only fires in the _other_ tabs. Re-saving the received data is harmless: writing an equal value fires no new event.
 - Tested by hand in a browser: first visit loads 7 seed tasks, a toggled task survives a reload, the search waits for the pause, a second tab's new task appears in the first, a broken `seed.json` shows the toast, and a full storage shows the "storage full" message.
 - Also added: filtering by project (F4), and a "saved in this browser only" note (a risk listed in BUSINESS_PLAN.md).
+
+## Phase 7 — Directives and pipes
+
+- `HighlightOverdueDirective` (`[appHighlightOverdue]="task.dueDate" [done]="task.done"`) uses the `host` metadata to toggle the `overdue` class. The class is styled in `styles.scss`, because it lands on other components' elements, where component styles would not reach. Used on the task row and on the form's due date input.
+- `AutofocusDirective` focuses its element in `afterNextRender`: the DOM exists by then, and it only runs in the browser. Used on the quick-add input and the form's title.
+- `FeatureFlagDirective` is **structural**: it injects `TemplateRef` and `ViewContainerRef` and creates the view only when the `APP_CONFIG` flag is on. `*appFeatureFlag="'statistics'"` is sugar for an `<ng-template [appFeatureFlag]>`.
+- `RelativeDatePipe` uses `Intl.RelativeTimeFormat` with `inject(LOCALE_ID)` ("in 3 days", "yesterday", "in 2 months"), and takes `today` as an optional argument so tests can pin the date. It is pure: it only runs again when its inputs change.
+- `PriorityLabelPipe` replaced the `@switch` in the badge and in the priority selector. The badge color is now a class binding: `class="badge" [class]="t.priority"`.
+- Built-in pipes: `date` (`'fullDate'` in the due date tooltip, `'medium'` for "Created…") and `titlecase`, chained after `date`. That one earns its place: weekday names are lowercase in Portuguese ("sexta-feira"). Pipes chain left to right: `t.dueDate | date: 'fullDate' : 'UTC' | titlecase`.
+- `'UTC'` in the `date` pipe matters: `'2027-01-15'` is parsed as UTC midnight, so without it a user west of UTC would see January 14.

@@ -126,12 +126,12 @@ Deploying early means every finished phase goes live at https://devsuperman.gith
 
 **Concepts:** attribute directives, `host` bindings, structural directives (`TemplateRef`, `ViewContainerRef`), `hostDirectives`, pure pipes, built-in pipes.
 
-- [ ] `appHighlightOverdue` attribute directive
-- [ ] `appAutofocus` directive for the form's first field
-- [ ] `*appFeatureFlag` structural directive that shows content only when a flag in `APP_CONFIG` is on
-- [ ] `relativeDate` pipe ("in 2 days", "yesterday")
-- [ ] `priorityLabel` pipe
-- [ ] Use the built-in `date` and `titlecase` pipes
+- [x] `appHighlightOverdue` attribute directive
+- [x] `appAutofocus` directive for the form's first field
+- [x] `*appFeatureFlag` structural directive that shows content only when a flag in `APP_CONFIG` is on
+- [x] `relativeDate` pipe ("in 2 days", "yesterday")
+- [x] `priorityLabel` pipe
+- [x] Use the built-in `date` and `titlecase` pipes
 
 **Done when:** directives and pipes live in `shared/` and are used in at least two places.
 

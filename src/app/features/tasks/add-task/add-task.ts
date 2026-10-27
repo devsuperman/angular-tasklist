@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, ElementRef, output, viewChild } from '@angular/core';
+import { AutofocusDirective } from '../../../shared/directives/autofocus';
 
 @Component({
   selector: 'app-add-task',
+  imports: [AutofocusDirective],
   templateUrl: './add-task.html',
   styleUrl: './add-task.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

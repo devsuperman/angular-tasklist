@@ -8,6 +8,7 @@ import {
   input,
   untracked,
 } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   NonNullableFormBuilder,
@@ -21,6 +22,9 @@ import { Priority, Task } from '../../../core/models/task';
 import { ProjectStore } from '../../../core/services/project-store';
 import { TaskStore } from '../../../core/services/task-store';
 import { PrioritySelectorComponent } from '../../../shared/components/priority-selector/priority-selector';
+import { AutofocusDirective } from '../../../shared/directives/autofocus';
+import { HighlightOverdueDirective } from '../../../shared/directives/highlight-overdue';
+import { RelativeDatePipe } from '../../../shared/pipes/relative-date.pipe';
 import { notInThePast } from '../../../shared/validators/not-in-the-past';
 import {
   highPriorityNeedsDate,
@@ -33,7 +37,15 @@ const newDateNotInThePast: ValidatorFn = (control) =>
 
 @Component({
   selector: 'app-task-form-page',
-  imports: [ReactiveFormsModule, RouterLink, PrioritySelectorComponent],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    DatePipe,
+    PrioritySelectorComponent,
+    AutofocusDirective,
+    HighlightOverdueDirective,
+    RelativeDatePipe,
+  ],
   templateUrl: './task-form-page.html',
   styleUrl: './task-form-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -3,11 +3,12 @@ import { Project } from '../../core/models/project';
 import { ProjectStore } from '../../core/services/project-store';
 import { TaskStore } from '../../core/services/task-store';
 import { CardComponent } from '../../shared/components/card/card';
+import { FeatureFlagDirective } from '../../shared/directives/feature-flag';
 import { ProjectFormComponent } from './project-form/project-form';
 
 @Component({
   selector: 'app-projects-page',
-  imports: [CardComponent, ProjectFormComponent],
+  imports: [CardComponent, ProjectFormComponent, FeatureFlagDirective],
   templateUrl: './projects-page.html',
   styleUrl: './projects-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,10 +21,10 @@ export class ProjectsPage {
 
   protected readonly projects = computed(() => {
     const tasks = this.taskStore.tasks();
-    return this.projectStore.projects().map((project) => ({
-      ...project,
-      taskCount: tasks.filter((t) => t.projectId === project.id).length,
-    }));
+    return this.projectStore.projects().map((project) => {
+      const own = tasks.filter((t) => t.projectId === project.id);
+      return { ...project, taskCount: own.length, doneCount: own.filter((t) => t.done).length };
+    });
   });
 
   protected readonly canDelete = computed(() => this.projects().length > 1);

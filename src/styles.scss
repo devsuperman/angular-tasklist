@@ -65,3 +65,8 @@ button[type='submit'],
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* Set by HighlightOverdueDirective, on elements of several components */
+.overdue {
+  border-left: 4px solid var(--color-danger) !important;
+}

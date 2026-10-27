@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, forwardRef, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PRIORITIES, Priority } from '../../../core/models/task';
+import { PriorityLabelPipe } from '../../pipes/priority-label.pipe';
 
 let nextId = 0;
 
 /** A radio group that works with `formControlName` and `ngModel`, like a native input. */
 @Component({
   selector: 'app-priority-selector',
+  imports: [PriorityLabelPipe],
   templateUrl: './priority-selector.html',
   styleUrl: './priority-selector.scss',
   providers: [

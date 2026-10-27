@@ -17,7 +17,10 @@
       } @else {
         <span class="swatch" [style.background]="project.color" aria-hidden="true"></span>
         <span class="name">{{ project.name }}</span>
-        <span class="count">{{ project.taskCount }} tasks</span>
+        <span class="count">
+          {{ project.taskCount }} tasks
+          <span *appFeatureFlag="'statistics'">· {{ project.doneCount }} done</span>
+        </span>
         <button type="button" class="link" (click)="editingId.set(project.id)">
           Rename <span class="visually-hidden">{{ project.name }}</span>
         </button>
