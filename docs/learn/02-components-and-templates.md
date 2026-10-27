@@ -22,9 +22,9 @@ An Angular app is a **tree of components**. `App` is the root (Chapter 1); pages
 
 Splitting the UI into components gives you small pieces you can understand, test and reuse on their own. In this project, the same `TaskItemComponent` will render each row of the list, and `CardComponent` will wrap different content on different pages.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 1)**: the tasks feature will have these components:
+🟢 **Built (Phase 1)**: the tasks feature has these components (more were added in later phases, see "In this repo" below):
 
 ```
 features/tasks/
@@ -38,7 +38,7 @@ features/tasks/
 
 Before writing components, define the shape of the data. The data model is in [TECH_STACK.md](../TECH_STACK.md).
 
-🔵 **Planned (Phase 1)**: `core/models/task.ts`
+🟢 **Built (Phase 1)**: `core/models/task.ts`
 
 ```ts
 export type Priority = 'low' | 'medium' | 'high';
@@ -63,7 +63,7 @@ export interface Task {
 
 ## 2.3 Anatomy of a standalone component
 
-🔵 **Planned (Phase 1)**: `features/tasks/task-list/task-list.ts`
+🟢 **Built (Phase 1)**: `features/tasks/task-list/task-list.ts`
 
 ```ts
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
@@ -135,7 +135,7 @@ A template is HTML plus a few kinds of **bindings** that connect it to the class
 
 **`$event`.** In an event binding, `$event` is the DOM event: `(input)="search($event)"`. For a component's `output()` (Chapter 4), `$event` is the emitted value.
 
-🔵 **Planned (Phase 1)**: `task-item.html`
+🟢 **Built (Phase 1)**: `task-item.html`
 
 ```html
 <li class="task" [class.done]="task().done" [class.overdue]="isOverdue()">
@@ -245,7 +245,7 @@ You can use short, simple class names (`.title`, `.badge`) in every component wi
 
 - 🟢 `src/styles.scss` holds **global** styles: the `body` font and margin. Later it will hold CSS variables for the theme (Chapter 10).
 - 🟢 `src/app/app.scss` styles only the root component's header and `<main>`.
-- 🔵 Each new component gets its own `.scss` file (the CLI is configured for SCSS in `angular.json`).
+- 🟢 Each new component gets its own `.scss` file (the CLI is configured for SCSS in `angular.json`).
 
 Two selectors help when you need to reach outside the box:
 
@@ -282,6 +282,13 @@ Custom elements like `<app-task-item>` are `display: inline` by default, which o
 4. Make done tasks look crossed out with `[class.done]`.
 5. Style the priority badge twice, once with `@switch` and once with a class binding. Keep the one you prefer and write why in NOTES.md.
 6. Use `@let` to show "3 of 5 done" without repeating expressions.
+
+## In this repo
+
+- Models: `core/models/task.ts`, `project.ts`, `stored-data.ts`.
+- `features/tasks/task-list/` (`TaskListComponent`, used as the `/tasks` page), `task-item/`, `add-task/`, `filter-bar/`, `task-form/`, `statistics-panel/`.
+- The priority badge started with `@switch` (Phase 1). In Phase 7 it became a class binding (`class="badge" [class]="t.priority"`) plus the `priorityLabel` pipe.
+- The routes name the list `TaskListComponent`, not `TaskListPage`: the component from Phase 1 simply became the page.
 
 ## Further reading
 

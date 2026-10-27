@@ -47,9 +47,9 @@ The statistics panel (F9) is below the list, and it will use a chart, which is h
 
 > The deferred components must be **standalone** and **not used anywhere else** without `@defer`, or they end up in the main bundle anyway. `ng build` shows deferred chunks as lazy.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 8)**: the statistics panel inside `@defer (on viewport)` with `@placeholder` and `@loading`. Check it in the Network tab: the chunk loads when you scroll.
+🟢 **Built (Phase 8)**: the statistics panel inside `@defer (on viewport)` with `@placeholder` and `@loading`. Check it in the Network tab: the chunk loads when you scroll.
 
 ---
 
@@ -70,7 +70,7 @@ Drag and drop, dialogs and focus traps are hard to get right (touch support, key
 
 ### Drag and drop (F8)
 
-🔵 **Planned (Phase 8)**:
+🟢 **Built (Phase 8)**:
 
 ```ts
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -165,7 +165,7 @@ Angular's old `@angular/animations` package is being replaced by plain CSS plus 
 
 ## 10.4 Theming: dark mode with a signal (F10)
 
-🔵 **Planned (Phase 8)**:
+🟢 **Built (Phase 8)**:
 
 ```ts
 // core/services/theme.service.ts
@@ -276,6 +276,14 @@ protected readonly isHandset = toSignal(
 4. Add a confirmation dialog before delete. Test it with only the keyboard.
 5. Build the theme toggle with a signal, CSS variables and an effect.
 6. Run Lighthouse (DevTools → Lighthouse → Accessibility) and fix what it finds.
+
+## In this repo
+
+- CDK only (no Material): drag and drop in `features/tasks/task-list/`, `Dialog` in `core/services/confirm.service.ts` and `shared/components/confirm-dialog/`.
+- The drag handle is a button that also moves tasks with the arrow keys, since CDK drag and drop has no keyboard support.
+- `features/tasks/statistics-panel/` inside `@defer (on viewport)`, and inside `*appFeatureFlag`.
+- `core/services/theme.service.ts`; dark tokens in `src/styles.scss` under `:root[data-theme='dark']`.
+- Lighthouse accessibility: 100 on the tasks, projects and new task pages.
 
 ## Further reading
 

@@ -23,9 +23,9 @@ TaskStore ──▶ TaskRepository ──▶ StorageService (abstract) ──▶
 - Tests give the repository a `MemoryStorageService` (Chapter 5) and never touch real `localStorage`.
 - If one day the data moves to IndexedDB or a server, only the repository changes.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 6)**: all data is under one key, with a version ([TECH_STACK.md](../TECH_STACK.md), Storage):
+🟢 **Built (Phase 6)**: all data is under one key, with a version ([TECH_STACK.md](../TECH_STACK.md), Storage):
 
 ```ts
 // core/services/data-repository.ts
@@ -135,9 +135,9 @@ A **resource** wraps async loading in signals: `value()`, `isLoading()`, `error(
 | `resource`     | Any `async` function (Promise) | `@angular/core`              |
 | `rxResource`   | Any Observable                 | `@angular/core/rxjs-interop` |
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 6)**: load the seed on the first visit.
+🟢 **Built (Phase 6)**: load the seed on the first visit.
 
 ```ts
 @Injectable({ providedIn: 'root' })
@@ -267,7 +267,7 @@ All in `@angular/core/rxjs-interop`.
 
 ### Search with debounce (F5)
 
-🔵 **Planned (Phase 6)**:
+🟢 **Built (Phase 6)**:
 
 ```ts
 export class TaskListPage {
@@ -351,6 +351,14 @@ fromEvent<StorageEvent>(window, 'storage')
 5. Build the debounced search. Add a `tap(console.log)` before and after `debounceTime` to see the difference.
 6. Open the app in two tabs, change a task in one, and see the other update.
 7. Fill storage on purpose (a loop writing big strings in the console) and check the "storage full" message.
+
+## In this repo
+
+- `core/services/data-repository.ts`: one `DataRepository` for the single key. It validates the parsed data (`isSeedData`) and throws `StorageFullError`.
+- `core/services/initial-data.ts`: `httpResource` with a `parse` option that validates the seed. Both stores start from it with `linkedSignal`.
+- `core/services/persistence.service.ts`: the save `effect` (option B), skipped while the seed loads, plus the `storage` event listener (`fromEvent`, `filter`, `takeUntilDestroyed`). It is created at startup with `provideAppInitializer`.
+- `core/interceptors/` and `core/services/loading.service.ts`, `toast.service.ts`; `shared/components/loading-bar/` and `toast/`.
+- The debounced search is in `features/tasks/task-list/task-list.ts`.
 
 ## Further reading
 

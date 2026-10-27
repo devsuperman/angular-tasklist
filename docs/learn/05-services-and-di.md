@@ -47,9 +47,9 @@ Component ──calls──▶ Store (signals) ──calls──▶ Repository �
 
 Each layer only talks to the one below it, and each can be tested alone.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 3)**: `core/services/task-store.ts`
+🟢 **Built (Phase 3)**: `core/services/task-store.ts`
 
 ```ts
 import { Injectable, computed, signal } from '@angular/core';
@@ -236,9 +236,9 @@ export const APP_CONFIG = new InjectionToken<AppConfig>('APP_CONFIG', {
 
 The storage key and seed URL are **configuration**, not code. Putting them behind a token means a test can inject a different key (so tests do not touch real data), and the `*appFeatureFlag` directive in Chapter 9 can read `features` from the same place.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 3)**: `APP_CONFIG` with the storage key and the seed data URL. 🔵 **Phase 7**: feature flags read from it.
+🟢 **Built (Phase 3)**: `APP_CONFIG` with the storage key and the seed data URL. 🟢 **Phase 7**: feature flags read from it.
 
 ---
 
@@ -255,7 +255,7 @@ A provider is `{ provide: TOKEN, use...: ... }`.
 
 ### Abstract class as a token: `StorageService`
 
-🔵 **Planned (Phase 3)**:
+🟢 **Built (Phase 3)**:
 
 ```ts
 // core/services/storage.service.ts
@@ -339,6 +339,13 @@ Inside a factory you can call `inject()` to get other dependencies.
 3. Create `APP_CONFIG` and inject it in the store. Log the key.
 4. Create `StorageService`, `LocalStorageService` and `MemoryStorageService`. Bind one in `app.config.ts`, then switch to the other and see that nothing else changes.
 5. Make a tiny `CounterService` with a signal. Provide it in `providedIn: 'root'`, and use it in two components: they share the value. Then put it in each component's `providers`: each gets its own. Write the difference in NOTES.md.
+
+## In this repo
+
+- `core/services/task-store.ts` and `project-store.ts`. Their state is a `linkedSignal` over `InitialData` (Chapter 8) rather than a plain `signal`, and saving moved out to `PersistenceService`.
+- `core/config/app-config.ts`: `APP_CONFIG` with a default `factory` (`appConfigFactory`, which picks the seed file for the current language), also provided with `useFactory` in `app.config.ts`.
+- `core/services/storage.service.ts`: `StorageService`, `LocalStorageService`, `MemoryStorageService` and `storageFactory` (the `useFactory` example from 5.6, used for real).
+- The provider-scope exercise is a test: `core/services/di-scopes.spec.ts`.
 
 ## Further reading
 

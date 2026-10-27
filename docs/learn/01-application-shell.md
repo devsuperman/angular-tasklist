@@ -159,7 +159,7 @@ Features like the router or `HttpClient` need setup (services, configuration, ev
 | `provideBrowserGlobalErrorListeners()` | Sends uncaught errors and unhandled promise rejections to Angular's `ErrorHandler` |
 | `provideRouter(routes)`                | The router, with the routes from `app.routes.ts` (empty for now)                   |
 
-This file will grow as the project grows. Here is a 🔵 **planned** version after Phases 3, 4 and 6:
+This file will grow as the project grows. Here is a 🟢 simplified version of what it became after Phases 3, 4 and 6 (the full file also has the service worker and app initializers):
 
 ```ts
 export const appConfig: ApplicationConfig = {
@@ -263,6 +263,13 @@ The rule of thumb: **features** may import from `core/` and `shared/`; `shared/`
 3. In `app.html`, write `{{ titel() }}` and run `npm run build`. Notice that the template is type checked.
 4. Run `ng generate component features/tasks/task-list --dry-run` and read which files it would create.
 5. Open the browser dev tools on the running app. Find `<app-root>` in the Elements panel and see what Angular rendered inside it.
+
+## In this repo
+
+- `src/main.ts` grew in Phase 10: it picks the language, loads the translations (`loadTranslations`), and only then imports `src/bootstrap.ts`, which calls `bootstrapApplication(App, appConfig)`. Chapter 12 explains why.
+- `src/app/app.config.ts` now provides the router (with input binding and view transitions), `HttpClient` with two interceptors, `APP_CONFIG` (with `useFactory`), `StorageService`, the service worker, and `provideAppInitializer` to start persistence and update checks.
+- `src/app/app.html` has a skip link, the main navigation, the theme toggle, the language select, a loading bar and a toast outlet around `<router-outlet />`.
+- The `.gitkeep` files are gone: every folder has real files now.
 
 ## Further reading
 

@@ -34,9 +34,9 @@ Since Angular 14 forms are **typed**: `form.value.title` is a `string`, and `for
 
 By default, `control.reset()` sets the value to `null`, so every control's type is `T | null`. With `NonNullableFormBuilder`, `reset()` goes back to the **initial** value, and types stay `string` instead of `string | null`.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 5)**: `features/tasks/task-form-page.ts`
+🟢 **Built (Phase 5)**: `features/tasks/task-form-page.ts`
 
 ```ts
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input } from '@angular/core';
@@ -184,7 +184,7 @@ Angular also adds CSS classes on the elements (`ng-invalid`, `ng-touched`, `ng-d
 
 A validator is a function: it receives a control and returns `null` (valid) or an errors object.
 
-🔵 **Planned (Phase 5)**: `shared/validators/not-in-the-past.ts`
+🟢 **Built (Phase 5)**: `shared/validators/not-in-the-past.ts`
 
 ```ts
 import { AbstractControl, ValidationErrors } from '@angular/forms';
@@ -204,7 +204,7 @@ Comparing `'YYYY-MM-DD'` strings works because that format sorts like the dates 
 
 An async validator returns a `Promise` or `Observable`. While it runs, the control is `pending`.
 
-🔵 **Planned (Phase 5)**: the title must be unique within the project.
+🟢 **Built (Phase 5)**: the title must be unique within the project.
 
 ```ts
 export function uniqueTitleValidator(
@@ -260,9 +260,9 @@ The error is on the **group** (`form.hasError('dueDateRequiredForHigh')`), not o
 
 The priority field is better as three buttons (Low / Medium / High) than a `<select>`. Without CVA, you would wire inputs and outputs by hand and lose validation, `dirty` and `touched`. With CVA, the parent just writes `formControlName="priority"`.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 5)**: `shared/components/priority-selector/priority-selector.ts`
+🟢 **Built (Phase 5)**: `shared/components/priority-selector/priority-selector.ts`
 
 ```ts
 @Component({
@@ -336,7 +336,7 @@ Notes:
 
 The model lives in the template with `[(ngModel)]`. Angular creates the `FormControl`s for you behind the scenes.
 
-🔵 **Planned (Phase 5)**: the project form, to compare.
+🟢 **Built (Phase 5)**: the project form, to compare.
 
 ```ts
 @Component({
@@ -425,6 +425,16 @@ Because it is experimental, the API may change: check [angular.dev](https://angu
 6. Write the `PrioritySelectorComponent` CVA and use it with `formControlName`. Check that touching it marks the control `touched`.
 7. Wire `unsavedChangesGuard` and test it by editing and pressing Back.
 8. Build the project form with `ngModel` and write the comparison in NOTES.md.
+
+## In this repo
+
+- `features/tasks/task-form/task-form-page.ts` and `.html`. Differences from the sketch:
+  - the due date validator only runs on a **dirty** control, so an overdue task can still be edited;
+  - `highPriorityNeedsDate` is used, as a group validator;
+  - the async validator lives in `shared/validators/task-validators.ts`, takes a function that returns the tasks, waits 150 ms (to show `pending`), and runs again when the project changes.
+- `shared/validators/not-in-the-past.ts`, `shared/components/priority-selector/`.
+- `features/projects/project-form/`: template-driven, with `linkedSignal` fields so the same form can create and rename.
+- Not done: the optional Signal Forms version.
 
 ## Further reading
 

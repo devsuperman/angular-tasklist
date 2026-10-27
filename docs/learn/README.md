@@ -6,10 +6,12 @@ A short book in chapters. Each chapter takes one group of Angular concepts and a
 2. **Why do we need it?** The problem it solves, and why this project uses it.
 3. **How is it applied here?** The real code in this repo, or the code we plan to write in the matching phase of [TASKS.md](../TASKS.md).
 
-Every chapter marks which code already exists and which is still planned:
+Every chapter marks where its examples live in the code:
 
 - 🟢 **In the code today**: you can open the file and read it.
-- 🔵 **Planned (Phase N)**: an example of what we will write in that phase. Use it as a guide, not as a copy-paste answer.
+- 🟢 **Built (Phase N)**: written in that phase. The snippet in the chapter was the plan and is sometimes simplified; the real code can differ. Each chapter ends with an **In this repo** section that lists the real files and the differences.
+
+All phases are done, so every snippet that used to be marked 🔵 **Planned** now exists in some form.
 
 ## Chapters
 
@@ -56,7 +58,7 @@ This is how the pieces fit once the project is complete. Each box is covered by 
                                    │
                    TaskStore, ProjectStore (signals)                       (ch. 3, 5)
                                    │
-              TaskRepository, ProjectRepository                            (ch. 8)
+              DataRepository (one versioned key)                           (ch. 8)
                                    │
               StorageService ── LocalStorageService ── localStorage        (ch. 5, 8)
 ```

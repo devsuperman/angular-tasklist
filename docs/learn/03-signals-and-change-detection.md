@@ -59,9 +59,9 @@ this.tasks.update((tasks) => tasks.filter((t) => t.id !== id));
 
 These three patterns (spread to add, `map` to change, `filter` to remove) are the whole `TaskStore` in Chapter 5.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 2)**: `TaskListComponent` keeps the tasks in a signal and changes them on events:
+🟢 **Built (Phase 2)**: `TaskListComponent` keeps the tasks in a signal and changes them on events:
 
 ```ts
 export class TaskListComponent {
@@ -101,9 +101,9 @@ The counters (F7) and the filtered list (F4) are not new state. They are **deriv
 
 > Rule: if a value can be calculated from other state, make it a `computed`, not a `signal`.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 2)**: counters and filtering.
+🟢 **Built (Phase 2)**: counters and filtering.
 
 ```ts
 export type StatusFilter = 'all' | 'pending' | 'done';
@@ -175,10 +175,10 @@ doneCount = computed(() => this.tasks().filter((t) => t.done).length);
 
 The wrong version runs later than the right one (effects are scheduled), creates moments where the two values disagree, and hides the relationship.
 
-### How it will be applied here
+### How it is applied here
 
-- 🔵 **Phase 2**: TASKS.md asks you to log state changes with an effect, then **remove it**. The goal is to feel how effects work and learn when not to use them.
-- 🔵 **Phase 6**: a real use. The store saves to storage whenever the tasks change:
+- 🟢 **Phase 2**: TASKS.md asks you to log state changes with an effect, then **remove it**. The goal is to feel how effects work and learn when not to use them.
+- 🟢 **Phase 6**: a real use. The store saves to storage whenever the tasks change:
 
   ```ts
   effect(() => this.repository.saveAll(this.tasks()));
@@ -186,7 +186,7 @@ The wrong version runs later than the right one (effects are scheduled), creates
 
   (Whether to save in an effect or explicitly inside each method is a design choice. Chapter 8 discusses both.)
 
-- 🔵 **Phase 8**: the theme toggle writes a class on `<html>` and saves the choice, both side effects outside Angular.
+- 🟢 **Phase 8**: the theme toggle writes a class on `<html>` and saves the choice, both side effects outside Angular.
 
 ### `untracked`
 
@@ -218,9 +218,9 @@ selectedId.set('42'); // the user picks another one
 
 `computed` is read-only. `signal` does not react to anything. Some state is in between: "the user's choice, which should reset when the context changes". Without `linkedSignal`, you would write an effect that calls `set`, which is the anti-pattern above.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 2 or 4)**: possible uses in this app:
+🟢 **Built (Phases 5 and 6)**: the app uses `linkedSignal` in the stores (state that starts from the saved data or the seed, Chapter 8) and in the project form (fields that start from the project being renamed, Chapter 7). Other possible uses:
 
 - The **selected project** on the task form: defaults to the project of the current filter, but the user can change it; it resets when the filter changes.
 - A **"selected task"** in the list that falls back to the first visible task when the filter hides it.
@@ -302,6 +302,13 @@ The project uses signals for state and RxJS where time matters (search with debo
 4. Add the status filter and `visibleTasks`.
 5. Add an `effect` that logs the tasks. Then remove it, and write in NOTES.md when an effect is the right tool.
 6. Make a `linkedSignal` for a selected task that resets when the filter changes.
+
+## In this repo
+
+- `computed`: the counters in `core/services/task-store.ts`, `visibleTasks` in `task-list.ts`, the statistics rows.
+- `effect`: saving in `core/services/persistence.service.ts`, the theme in `theme.service.ts`, filling the task form in `task-form-page.ts` (with `untracked`), and `FeatureFlagDirective`. The Phase 2 logging effect was added and then removed, as planned.
+- `linkedSignal`: the stores' state (`TaskStore`, `ProjectStore`) and the project form fields.
+- `resource`: `httpResource` in `core/services/initial-data.ts`.
 
 ## Further reading
 

@@ -60,7 +60,7 @@ What each piece does:
 
 ## 11.3 Unit testing a store
 
-🔵 **Planned (Phase 9)**: `core/services/task-store.spec.ts`
+🟢 **Built (Phase 9)**: `core/services/task-store.spec.ts`
 
 ```ts
 describe('TaskStore', () => {
@@ -165,7 +165,7 @@ For more realistic routing tests, `RouterTestingHarness` navigates to a URL and 
 
 ## 11.6 Testing a component: inputs and outputs
 
-🔵 **Planned (Phase 9)**: `TaskItemComponent`
+🟢 **Built (Phase 9)**: `TaskItemComponent`
 
 ```ts
 describe('TaskItemComponent', () => {
@@ -216,7 +216,7 @@ When you use CDK or Material components, their **harnesses** give a stable testi
 
 ## 11.7 Testing HTTP: `HttpTestingController`
 
-🔵 **Planned (Phase 9)**: the seed loading test.
+🟢 **Built (Phase 9)**: the seed loading test.
 
 ```ts
 it('loads the seed when nothing is saved', async () => {
@@ -253,7 +253,7 @@ it('loads the seed when nothing is saved', async () => {
 
 Playwright opens a real browser, loads the built app, and acts like a user.
 
-🔵 **Planned (Phase 9)**: the flow from [TASKS.md](../TASKS.md):
+🟢 **Built (Phase 9)**: the flow from [TASKS.md](../TASKS.md):
 
 ```ts
 // e2e/tasks.spec.ts
@@ -300,6 +300,12 @@ Unit tests prove the pieces work; one e2e test proves they work **together**: ro
 5. Test `TaskItemComponent` with `setInput` and a clicked checkbox.
 6. Test the seed loading and the error interceptor with `HttpTestingController`.
 7. Add Playwright and write the e2e flow.
+
+## In this repo
+
+- Unit and component tests sit next to the code (`*.spec.ts`), with shared helpers in `src/app/testing/test-data.ts`. Run them with `npm test`.
+- `TaskItemComponent`'s test selects the delete button by class: interpolated `aria-*` attributes are set as ARIA properties, which jsdom does not reflect to attributes.
+- E2E: `e2e/tasks.spec.ts` and `e2e/production.spec.ts` (Portuguese, offline), run with `npm run e2e`. `playwright.config.ts` builds with `build:pages` and serves the result like GitHub Pages (`e2e/serve-pages.mjs`).
 
 ## Further reading
 

@@ -4,19 +4,19 @@ The technical decisions, architecture and conventions for the project. For what 
 
 ## Stack
 
-| Concern          | Choice                                                                                        | Why                                                                               |
-| ---------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| Framework        | Latest stable Angular, standalone components (no NgModules)                                   | The current recommended way to write Angular                                      |
-| Reactivity       | Signals (`signal`, `computed`, `effect`, `linkedSignal`, `resource`) + RxJS for event streams | Signals are Angular's main reactivity model; RxJS is still used for async streams |
-| Change detection | Zoneless (the default in new projects since Angular 21)                                       | Matches modern Angular and forces a clear understanding of signals                |
-| Language         | TypeScript in strict mode                                                                     | Catches errors early, and typed forms need it                                     |
-| Styling          | SCSS; Angular Material + CDK later (phase 8)                                                  | SCSS is simple to start with; the CDK gives drag and drop, overlays and a11y      |
-| Persistence      | `localStorage` behind a `StorageService`; seed data in `public/seed.json`                     | No server needed, so the app is plain static files that GitHub Pages can host     |
-| Unit tests       | Vitest (the Angular CLI default) + Angular testing utilities                                  | Fast, and the default for new projects                                            |
-| E2E tests        | Playwright                                                                                    | Reliable cross-browser tests                                                      |
-| Code quality     | ESLint (`@angular-eslint`), Prettier                                                          | Consistent style and catches mistakes                                             |
-| CI/CD            | GitHub Actions; deploy to GitHub Pages                                                        | Free, integrated with the repo, and enough for a static app                       |
-| Later            | `@angular/localize`, `@angular/pwa`                                                           | i18n and offline support (no SSR: GitHub Pages cannot run a server)               |
+| Concern          | Choice                                                                                        | Why                                                                                            |
+| ---------------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Framework        | Latest stable Angular, standalone components (no NgModules)                                   | The current recommended way to write Angular                                                   |
+| Reactivity       | Signals (`signal`, `computed`, `effect`, `linkedSignal`, `resource`) + RxJS for event streams | Signals are Angular's main reactivity model; RxJS is still used for async streams              |
+| Change detection | Zoneless (the default in new projects since Angular 21)                                       | Matches modern Angular and forces a clear understanding of signals                             |
+| Language         | TypeScript in strict mode                                                                     | Catches errors early, and typed forms need it                                                  |
+| Styling          | SCSS; Angular Material + CDK later (phase 8)                                                  | SCSS is simple to start with; the CDK gives drag and drop, overlays and a11y                   |
+| Persistence      | `localStorage` behind a `StorageService`; seed data in `public/seed.json`                     | No server needed, so the app is plain static files that GitHub Pages can host                  |
+| Unit tests       | Vitest (the Angular CLI default) + Angular testing utilities                                  | Fast, and the default for new projects                                                         |
+| E2E tests        | Playwright                                                                                    | Reliable cross-browser tests                                                                   |
+| Code quality     | ESLint (`@angular-eslint`), Prettier                                                          | Consistent style and catches mistakes                                                          |
+| CI/CD            | GitHub Actions; deploy to GitHub Pages                                                        | Free, integrated with the repo, and enough for a static app                                    |
+| i18n and PWA     | `@angular/localize` (runtime translations), `@angular/service-worker`                         | English and pt-BR in one build, and offline support (no SSR: GitHub Pages cannot run a server) |
 
 ## Architecture
 
@@ -24,7 +24,7 @@ The technical decisions, architecture and conventions for the project. For what 
 
 - **Components** show data and send user events. They hold no business logic.
 - **Stores** (services that keep state in signals) own the app state and the business rules.
-- **Repositories** (`TaskRepository`, `ProjectRepository`) read and write typed data through `StorageService`. They are the only code that knows how data is stored.
+- **Repository** (`DataRepository`) reads and writes typed, versioned data through `StorageService`. It is the only code that knows how data is stored. (One repository instead of one per entity, because all data shares one key.)
 - **`StorageService`** is an abstract class with a `LocalStorageService` implementation, so tests can use an in-memory fake.
 - **`HttpClient`** is used only to load `public/seed.json` on the first visit. An interceptor handles errors and the loading indicator for that request.
 
@@ -56,14 +56,14 @@ src/app/
 
 ### Routes
 
-| Path         | Component      | Notes                                 |
-| ------------ | -------------- | ------------------------------------- |
-| `''`         | —              | Redirects to `/tasks`                 |
-| `/tasks`     | `TaskListPage` | Lazy loaded                           |
-| `/tasks/new` | `TaskFormPage` | `unsavedChangesGuard`                 |
-| `/tasks/:id` | `TaskFormPage` | The `id` arrives as a component input |
-| `/projects`  | `ProjectsPage` | Lazy loaded                           |
-| `**`         | `NotFoundPage` |                                       |
+| Path         | Component           | Notes                                 |
+| ------------ | ------------------- | ------------------------------------- |
+| `''`         | —                   | Redirects to `/tasks`                 |
+| `/tasks`     | `TaskListComponent` | Lazy loaded                           |
+| `/tasks/new` | `TaskFormPage`      | `unsavedChangesGuard`                 |
+| `/tasks/:id` | `TaskFormPage`      | The `id` arrives as a component input |
+| `/projects`  | `ProjectsPage`      | Lazy loaded                           |
+| `**`         | `NotFoundPage`      |                                       |
 
 ## Data model
 
@@ -129,21 +129,21 @@ interface StoredData {
 
 Mark each item once it is used in the code.
 
-- [ ] Standalone components and templates
-- [ ] Control flow (`@if`, `@for`, `@switch`, `@let`, `@defer`)
-- [ ] Signals: `signal`, `computed`, `effect`, `linkedSignal`, `resource`
-- [ ] Signal-based `input` / `output` / `model` / `viewChild`
-- [ ] Content projection
-- [ ] Lifecycle hooks and `DestroyRef`
-- [ ] Services, `inject()`, providers, `InjectionToken`
-- [ ] Router: lazy loading, functional guards, resolvers, input binding
-- [ ] Reactive forms, typed forms, custom validators, `ControlValueAccessor`
-- [ ] Template-driven forms
-- [ ] `HttpClient` (seed data), an interceptor, RxJS operators, RxJS ↔ signals interop
-- [ ] Custom directives (attribute and structural) and pipes
-- [ ] Angular CDK / Material
-- [ ] Unit, component and e2e testing
-- [ ] i18n, PWA, CI/CD and deployment to GitHub Pages
+- [x] Standalone components and templates
+- [x] Control flow (`@if`, `@for`, `@switch`, `@let`, `@defer`)
+- [x] Signals: `signal`, `computed`, `effect`, `linkedSignal`, `resource`
+- [x] Signal-based `input` / `output` / `model` / `viewChild`
+- [x] Content projection
+- [x] Lifecycle hooks and `DestroyRef`
+- [x] Services, `inject()`, providers, `InjectionToken`
+- [x] Router: lazy loading, functional guards, resolvers, input binding
+- [x] Reactive forms, typed forms, custom validators, `ControlValueAccessor`
+- [x] Template-driven forms
+- [x] `HttpClient` (seed data), an interceptor, RxJS operators, RxJS ↔ signals interop
+- [x] Custom directives (attribute and structural) and pipes
+- [x] Angular CDK / Material
+- [x] Unit, component and e2e testing
+- [x] i18n, PWA, CI/CD and deployment to GitHub Pages
 
 ## References
 

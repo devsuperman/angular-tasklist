@@ -186,6 +186,14 @@ All data is already in `localStorage`. Once the files are cached, the app works 
 5. Read `.github/workflows/deploy.yml` and the last run under the repo's **Actions** tab.
 6. After Phase 4, refresh a deep link on the live site and check it loads.
 
+## In this repo
+
+- **i18n uses runtime loading, not one build per language.** One build keeps one base href and one `404.html` on GitHub Pages. `src/main.ts` loads `src/locale/messages.pt-BR.json` before importing the app; `npm run i18n` extracts messages and rebuilds that file from `scripts/pt-BR.translations.json`. The language comes from the saved choice or the browser, and can be changed in the header.
+- Translated `aria-*` attributes with interpolation were not applied in the build; those labels are built in code with `$localize` and bound with `[attr.aria-label]`.
+- PWA: `ngsw-config.json`, `public/manifest.webmanifest`, `public/icons/`, `provideServiceWorker` in `app.config.ts`, and `core/services/app-update.service.ts` for "a new version is available".
+- CI: `.github/workflows/ci.yml` (pushes and pull requests) and `deploy.yml` (main) both run format check, lint, unit tests, `build:pages` and e2e.
+- Budget: `initial` is 350 kB warning / 500 kB error.
+
 ## Further reading
 
 - [Building and serving](https://angular.dev/tools/cli/build)

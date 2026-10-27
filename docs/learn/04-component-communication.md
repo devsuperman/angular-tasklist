@@ -54,9 +54,9 @@ export class TaskItemComponent {
 - Inputs are **read-only** inside the child. You cannot `set` them. That enforces "data down".
 - `transform` converts the bound value. `booleanAttribute` and `numberAttribute` are built in.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 2)**: `TaskItemComponent` takes the task as `input.required()` ([TASKS.md](../TASKS.md)). Later, `ProjectBadgeComponent` could take `input.required<Project>()`.
+🟢 **Built (Phase 2)**: `TaskItemComponent` takes the task as `input.required()` ([TASKS.md](../TASKS.md)). Later, `ProjectBadgeComponent` could take `input.required<Project>()`.
 
 ---
 
@@ -138,9 +138,9 @@ Here `filter` is the parent's `signal<StatusFilter>('all')`. Pass the signal its
 
 A filter bar is a control: it shows a value **and** changes it. With `input` + `output` you would write `[value]="filter()" (valueChange)="filter.set($event)"`. `model()` is exactly that, shorter. Use it for components that act like form controls. For everything else, prefer one-way `input` + `output`: it is clearer who owns the state.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 2)**: `FilterBarComponent` with `model()` for All / Pending / Done. The parent's `visibleTasks` computed (Chapter 3) reacts to it.
+🟢 **Built (Phase 2)**: `FilterBarComponent` with `model()` for All / Pending / Done. The parent's `visibleTasks` computed (Chapter 3) reacts to it.
 
 ---
 
@@ -181,9 +181,9 @@ export class CardComponent {}
 
 `CardComponent` owns the **look** (border, padding, header, footer). The parent owns the **content**. One card component serves the counters, the statistics panel and the project list, without inputs for every possible piece of text.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 2)**: a reusable `shared/components/card` with multi-slot `<ng-content>`.
+🟢 **Built (Phase 2)**: a reusable `shared/components/card` with multi-slot `<ng-content>`.
 
 ---
 
@@ -226,9 +226,9 @@ export class AddTaskComponent {
 
 Some things have no binding: focusing an input, measuring an element, calling a method on a child. Use `viewChild` for those. If a binding can do the job (`[value]`, `[class]`), prefer the binding.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 2)**: the "add task" input uses `viewChild()` to focus the field after adding. In Phase 7 a reusable `appAutofocus` directive (Chapter 9) replaces part of this.
+🟢 **Built (Phase 2)**: the "add task" input uses `viewChild()` to focus the field after adding. In Phase 7 a reusable `appAutofocus` directive (Chapter 9) replaces part of this.
 
 ---
 
@@ -266,9 +266,9 @@ export class ClockComponent {
 
 `DestroyRef` can be injected anywhere (components, directives, services), so cleanup sits right next to the code that needs it. In Chapter 8, `takeUntilDestroyed()` uses it to end RxJS subscriptions.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned**: `DestroyRef` for the `storage` event listener (Phase 6) if it is not handled by `takeUntilDestroyed`; `afterNextRender` for focusing on first render in the `appAutofocus` directive (Phase 7).
+🟢 **Built**: `DestroyRef` for the `storage` event listener (Phase 6) if it is not handled by `takeUntilDestroyed`; `afterNextRender` for focusing on first render in the `appAutofocus` directive (Phase 7).
 
 ---
 
@@ -287,6 +287,14 @@ export class ClockComponent {
 4. Build `CardComponent` with three slots and use it for the counters.
 5. Build the "add task" input and focus it with `viewChild` after each add.
 6. Add a `DestroyRef.onDestroy(() => console.log('bye'))` to `TaskItemComponent` and delete a task. Watch the log.
+
+## In this repo
+
+- `TaskItemComponent`: `task = input.required<Task>()`, `project = input<Project>()`, outputs `toggleDone` and `remove`. The names avoid native DOM event names (`toggle`), which `@angular-eslint/no-output-native` forbids.
+- `FilterBarComponent`: `status = model<StatusFilter>('all')`, bound with `[(status)]`.
+- `CardComponent` (`shared/components/card/card.ts`): `[card-title]`, default and `[card-actions]` slots.
+- `AddTaskComponent`: `viewChild.required('titleInput')`.
+- `DestroyRef`: `takeUntilDestroyed(inject(DestroyRef))` in `task-form-page.ts` and `persistence.service.ts`. `afterNextRender`: `shared/directives/autofocus.ts`.
 
 ## Further reading
 

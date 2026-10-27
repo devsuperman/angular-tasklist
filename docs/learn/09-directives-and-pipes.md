@@ -26,7 +26,7 @@ Some behavior is needed on **many different elements**, and none of them should 
 
 ## 9.2 Attribute directive: `appHighlightOverdue`
 
-🔵 **Planned (Phase 7)**: `shared/directives/highlight-overdue.ts`
+🟢 **Built (Phase 7)**: `shared/directives/highlight-overdue.ts`
 
 ```ts
 import { Directive, computed, input } from '@angular/core';
@@ -83,7 +83,7 @@ host: {
 
 ## 9.3 Attribute directive with DOM access: `appAutofocus`
 
-🔵 **Planned (Phase 7)**: `shared/directives/autofocus.ts`
+🟢 **Built (Phase 7)**: `shared/directives/autofocus.ts`
 
 ```ts
 import { Directive, ElementRef, afterNextRender, inject } from '@angular/core';
@@ -129,9 +129,9 @@ is short for:
 
 An `<ng-template>` is not rendered by itself. The directive receives it as a `TemplateRef` and creates a view from it with `ViewContainerRef` when it wants.
 
-### How it will be applied here
+### How it is applied here
 
-🔵 **Planned (Phase 7)**: show content only when a flag in `APP_CONFIG` (Chapter 5) is on.
+🟢 **Built (Phase 7)**: show content only when a flag in `APP_CONFIG` (Chapter 5) is on.
 
 ```ts
 // shared/directives/feature-flag.ts
@@ -218,7 +218,7 @@ Built-in pipes must be imported like anything else: `imports: [DatePipe, TitleCa
 
 ### Custom pipe: `relativeDate`
 
-🔵 **Planned (Phase 7)**: `shared/pipes/relative-date.pipe.ts`
+🟢 **Built (Phase 7)**: `shared/pipes/relative-date.pipe.ts`
 
 ```ts
 import { Pipe, PipeTransform } from '@angular/core';
@@ -290,6 +290,12 @@ export class PriorityLabelPipe implements PipeTransform {
 4. Use `hostDirectives` to add the overdue highlight to `TaskItemComponent` itself.
 5. Write `relativeDate` and `priorityLabel`, with unit tests that pass a fixed `today`.
 6. Use the built-in `date` and `titlecase` pipes.
+
+## In this repo
+
+- `shared/directives/highlight-overdue.ts`, `autofocus.ts`, `feature-flag.ts`; `shared/pipes/relative-date.pipe.ts`, `priority-label.pipe.ts`.
+- `RelativeDatePipe` uses `inject(LOCALE_ID)` and switches to weeks and months for far dates. `PriorityLabelPipe` returns translated labels without emojis.
+- `HighlightOverdueDirective` is applied in the templates (task row, form date input) rather than through `hostDirectives`.
 
 ## Further reading
 

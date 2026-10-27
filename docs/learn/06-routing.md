@@ -39,7 +39,7 @@ The `<header>` is outside the outlet, so it stays while pages change below it.
 
 ## 6.2 The route table
 
-🔵 **Planned (Phase 4)**: the routes from [TECH_STACK.md](../TECH_STACK.md):
+🟢 **Built (Phase 4)**: the routes from [TECH_STACK.md](../TECH_STACK.md):
 
 ```ts
 // app.routes.ts
@@ -118,7 +118,7 @@ Phase 4's "done when" says: _the network tab shows the lazy chunks loading_. Ope
 ## 6.4 Navigating: `routerLink` and `routerLinkActive`
 
 ```html
-<!-- app.html, planned -->
+<!-- app.html (simplified) -->
 <header class="app-header">
   <h1>{{ title() }}</h1>
   <nav aria-label="Main">
@@ -193,7 +193,7 @@ A **guard** decides whether navigation may continue. Guards are plain functions 
 
 ### `taskExistsGuard`
 
-🔵 **Planned (Phase 4)**: redirect to the list when the id does not exist.
+🟢 **Built (Phase 4)**: redirect to the list when the id does not exist.
 
 ```ts
 // core/guards/task-exists.guard.ts
@@ -212,7 +212,7 @@ Return a `UrlTree` instead of calling `router.navigate()`: the router then cance
 
 ### `unsavedChangesGuard`
 
-🔵 **Planned (Phase 5)**: warn before leaving a form with unsaved changes (a user story in [BUSINESS_PLAN.md](../BUSINESS_PLAN.md)).
+🟢 **Built (Phase 5)**: warn before leaving a form with unsaved changes (a user story in [BUSINESS_PLAN.md](../BUSINESS_PLAN.md)).
 
 ```ts
 // core/guards/unsaved-changes.guard.ts
@@ -284,6 +284,12 @@ When a user refreshes `/angular-tasklist/tasks/123`, the browser asks GitHub Pag
 5. Write `taskExistsGuard`. Visit `/tasks/nope` and watch the redirect.
 6. Write the resolver and see the task arrive as an input.
 7. Add `withViewTransitions()` and watch the pages cross-fade.
+
+## In this repo
+
+- `app.routes.ts` and `features/tasks/tasks.routes.ts`, as above, with `$localize` titles (Chapter 12).
+- `core/guards/task-exists.guard.ts`, `features/tasks/task.resolver.ts`, `core/guards/unsaved-changes.guard.ts`. The unsaved-changes guard returns an `Observable<boolean>` from the confirmation dialog (Chapter 10) instead of calling `confirm()`.
+- The list page is `TaskListComponent`, not `TaskListPage`.
 
 ## Further reading
 
