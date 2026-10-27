@@ -1,0 +1,5 @@
+<form class="add-task" (submit)="$event.preventDefault(); add()">
+  <label for="new-task-title" class="visually-hidden">New task</label>
+  <input id="new-task-title" #titleInput placeholder="What needs to be done?" autocomplete="off" />
+  <button type="submit">Add</button>
+</form>

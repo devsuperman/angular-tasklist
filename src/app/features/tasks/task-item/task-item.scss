@@ -43,3 +43,16 @@
   font-size: 0.875rem;
   color: var(--color-muted);
 }
+
+.icon {
+  border: 0;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+
+  &:hover {
+    color: var(--color-danger);
+  }
+}

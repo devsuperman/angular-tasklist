@@ -23,3 +23,45 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
 }
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
+input:not([type='checkbox'], [type='radio'], [type='color']),
+select,
+textarea {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.375rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+button[type='submit'],
+.button {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-primary);
+  border-radius: 0.375rem;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  cursor: pointer;
+  text-decoration: none;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

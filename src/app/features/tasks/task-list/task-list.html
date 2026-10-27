@@ -1,11 +1,39 @@
 <section class="task-list">
   <h2>Tasks</h2>
 
+  <app-card>
+    <span card-title>Summary</span>
+    <dl class="counters">
+      <div>
+        <dt>Total</dt>
+        <dd>{{ total() }}</dd>
+      </div>
+      <div>
+        <dt>Done</dt>
+        <dd>{{ doneCount() }}</dd>
+      </div>
+      <div>
+        <dt>Pending</dt>
+        <dd>{{ pendingCount() }}</dd>
+      </div>
+      <div [class.alert]="overdueCount() > 0">
+        <dt>Overdue</dt>
+        <dd>{{ overdueCount() }}</dd>
+      </div>
+    </dl>
+  </app-card>
+
+  <app-add-task (added)="add($event)" />
+
+  <app-filter-bar [(status)]="filter" />
+
   <ul>
-    @for (task of tasks(); track task.id) {
-      <li><app-task-item [task]="task" /></li>
+    @for (task of visibleTasks(); track task.id) {
+      <li>
+        <app-task-item [task]="task" (toggleDone)="toggle($event)" (remove)="remove($event)" />
+      </li>
     } @empty {
-      <li class="empty">No tasks yet. Enjoy your free time!</li>
+      <li class="empty">No tasks here. Enjoy your free time!</li>
     }
   </ul>
 </section>

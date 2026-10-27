@@ -20,3 +20,14 @@ What I learned in each phase.
 - `TaskItemComponent` renders one row. `@let t = task();` reads the input once and gives the template a short name.
 - The priority badge uses `@switch`; the "done" style uses `[class.done]`. `[attr.aria-label]` is needed because ARIA attributes have no DOM property.
 - Component styles are scoped to the component. Colors are CSS custom properties in `styles.scss`, so a dark theme later only has to redefine the tokens.
+
+## Phase 2 — Component communication and signals
+
+- `TaskItemComponent` takes `task = input.required<Task>()` and emits `toggleDone` and `remove` with `output<string>()`. The names avoid native DOM event names (`toggle`, `delete`-like names trip `@angular-eslint/no-output-native`).
+- The list keeps tasks in a `signal` and changes them with `update`, always returning a **new** array (and a new object for the changed task). Mutating in place would not notify anyone.
+- Counters are `computed`: total, done, pending and overdue. They are lazy and cached, and update by themselves when `tasks` changes.
+- `FilterBarComponent` exposes `status = model<StatusFilter>('all')`. The parent binds it with `[(status)]="filter"`, the "banana in a box" two-way binding, and `visibleTasks` is a `computed` that reads `filter()`.
+- `CardComponent` has three `<ng-content>` slots: `[card-title]`, the default body and `[card-actions]`.
+- `AddTaskComponent` uses `viewChild.required('titleInput')` to clear and focus the input after adding.
+- I logged `tasks()` with an `effect`, saw it run once at start and once per change, then removed it. Effects are for syncing with the outside world (storage, DOM APIs), not for deriving state: that is what `computed` is for.
+- "Overdue" compares ISO date strings, using the **local** date (`todayIso()`), not `toISOString()` (which is UTC and can be off by a day).

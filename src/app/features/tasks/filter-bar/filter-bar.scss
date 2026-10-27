@@ -1,0 +1,23 @@
+.filter-bar {
+  display: inline-flex;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border: 0;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+
+  & + & {
+    border-left: 1px solid var(--color-border);
+  }
+
+  &.active {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+}

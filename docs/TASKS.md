@@ -49,13 +49,13 @@ Deploying early means every finished phase goes live at https://devsuperman.gith
 
 **Concepts:** `input()`, `output()`, `model()`, `signal`, `computed`, `effect`, `linkedSignal`, `<ng-content>`, `viewChild()`, lifecycle hooks, `DestroyRef`.
 
-- [ ] `TaskItemComponent` takes the task as `input.required()` and emits `toggle` and `delete`
-- [ ] The parent holds tasks in a `signal` and updates it on events
-- [ ] Counters with `computed`: total, done, pending, overdue
-- [ ] `FilterBarComponent` with `model()` for the filter value (All / Pending / Done)
-- [ ] Reusable `CardComponent` with multi-slot `<ng-content>`
-- [ ] An "add task" input that uses `viewChild()` to focus the field
-- [ ] Log state changes with `effect` (then remove it, and understand when _not_ to use effects)
+- [x] `TaskItemComponent` takes the task as `input.required()` and emits `toggle` and `delete`
+- [x] The parent holds tasks in a `signal` and updates it on events
+- [x] Counters with `computed`: total, done, pending, overdue
+- [x] `FilterBarComponent` with `model()` for the filter value (All / Pending / Done)
+- [x] Reusable `CardComponent` with multi-slot `<ng-content>`
+- [x] An "add task" input that uses `viewChild()` to focus the field
+- [x] Log state changes with `effect` (then remove it, and understand when _not_ to use effects)
 
 **Done when:** you can add, toggle and delete tasks in memory, and the counters update on their own.
 

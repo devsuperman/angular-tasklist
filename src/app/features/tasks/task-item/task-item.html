@@ -1,6 +1,11 @@
 @let t = task();
 <article class="task" [class.done]="t.done">
-  <input type="checkbox" [checked]="t.done" [attr.aria-label]="'Done: ' + t.title" />
+  <input
+    type="checkbox"
+    [checked]="t.done"
+    [attr.aria-label]="'Done: ' + t.title"
+    (change)="toggleDone.emit(t.id)"
+  />
 
   <span class="title">{{ t.title }}</span>
 
@@ -21,4 +26,13 @@
   } @else {
     <span class="due none">No due date</span>
   }
+
+  <button
+    type="button"
+    class="icon"
+    [attr.aria-label]="'Delete ' + t.title"
+    (click)="remove.emit(t.id)"
+  >
+    ✕
+  </button>
 </article>

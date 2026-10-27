@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { Task } from '../../../core/models/task';
 
 @Component({
@@ -9,4 +9,7 @@ import { Task } from '../../../core/models/task';
 })
 export class TaskItemComponent {
   readonly task = input.required<Task>();
+
+  readonly toggleDone = output<string>();
+  readonly remove = output<string>();
 }

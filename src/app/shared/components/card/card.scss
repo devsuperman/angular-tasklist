@@ -1,0 +1,24 @@
+:host {
+  display: block;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  background: var(--color-surface);
+}
+
+.card-title:empty,
+.card-actions:empty {
+  display: none;
+}
+
+.card-title {
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 0.75rem;
+}

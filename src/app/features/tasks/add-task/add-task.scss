@@ -1,0 +1,9 @@
+.add-task {
+  display: flex;
+  gap: 0.5rem;
+}
+
+input {
+  flex: 1;
+  min-width: 0;
+}
