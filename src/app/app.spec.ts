@@ -1,10 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
+import { MemoryStorageService, StorageService } from './core/services/storage.service';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
+      providers: [{ provide: StorageService, useClass: MemoryStorageService }],
     }).compileComponents();
   });
 

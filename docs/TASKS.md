@@ -63,11 +63,11 @@ Deploying early means every finished phase goes live at https://devsuperman.gith
 
 **Concepts:** `@Injectable`, `inject()`, provider scopes, `InjectionToken`, `useValue` / `useFactory` / `useClass`.
 
-- [ ] Move state and logic into `TaskStore` (signals + `add`, `toggle`, `remove`, `update` methods)
-- [ ] Expose read-only signals (`asReadonly()`, `computed`)
-- [ ] `APP_CONFIG` `InjectionToken` with the storage key and the seed data URL
-- [ ] Abstract `StorageService` with a `LocalStorageService` implementation
-- [ ] Try a component-level provider and see that each instance gets its own service
+- [x] Move state and logic into `TaskStore` (signals + `add`, `toggle`, `remove`, `update` methods)
+- [x] Expose read-only signals (`asReadonly()`, `computed`)
+- [x] `APP_CONFIG` `InjectionToken` with the storage key and the seed data URL
+- [x] Abstract `StorageService` with a `LocalStorageService` implementation
+- [x] Try a component-level provider and see that each instance gets its own service
 
 **Done when:** components contain no business logic, and tasks survive a page reload.
 

@@ -31,3 +31,13 @@ What I learned in each phase.
 - `AddTaskComponent` uses `viewChild.required('titleInput')` to clear and focus the input after adding.
 - I logged `tasks()` with an `effect`, saw it run once at start and once per change, then removed it. Effects are for syncing with the outside world (storage, DOM APIs), not for deriving state: that is what `computed` is for.
 - "Overdue" compares ISO date strings, using the **local** date (`todayIso()`), not `toISOString()` (which is UTC and can be off by a day).
+
+## Phase 3 — Services and dependency injection
+
+- State and rules moved to `TaskStore` and `ProjectStore` (`core/services/`). Components only `inject()` a store, read its signals and call its methods.
+- The stores keep a private writable `signal` and expose `asReadonly()` and `computed` values. `store.tasks.set([])` from a component no longer compiles.
+- `APP_CONFIG` is an `InjectionToken<AppConfig>` with the storage key, the seed URL and feature flags. It has a default `factory`, and `app.config.ts` also provides it with `useValue`.
+- `StorageService` is an **abstract class** (interfaces vanish at runtime, so they cannot be DI tokens). `LocalStorageService` and `MemoryStorageService` extend it. `app.config.ts` uses `useFactory: storageFactory`, which falls back to memory when `localStorage` throws (private mode).
+- For now each store saves its own key with an `effect`, so tasks survive a reload. Phase 6 replaces this with a repository and one versioned key.
+- The app test broke with `NG0201: No provider found for StorageService`. An abstract class has no `providedIn`, so every injector that needs it (including `TestBed`) must provide it. The test now uses `MemoryStorageService`.
+- `core/services/di-scopes.spec.ts` shows provider scopes: with `providedIn: 'root'` two components share one instance; with `providers: [CounterService]` in the component, each instance gets its own.
