@@ -50,3 +50,30 @@ ul {
     color: var(--color-danger);
   }
 }
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  input[type='search'] {
+    flex: 1;
+    min-width: 10rem;
+  }
+}
+
+.status {
+  margin: 0;
+  color: var(--color-muted);
+
+  &.error {
+    color: var(--color-danger);
+  }
+}
+
+.note {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  text-align: center;
+}

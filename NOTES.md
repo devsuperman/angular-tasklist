@@ -68,3 +68,15 @@ What I learned in each phase.
 - `ProjectFormComponent` is **template-driven** (`ngModel` on signals, `#projectForm="ngForm"`). Its fields are `linkedSignal`s: they start from the `project` input and stay writable. Compared with reactive forms, it's less code for a tiny form, but the validation lives in the HTML and is harder to test.
 - Projects: create, rename (inline, reusing the same form) and delete. Deleting a project also deletes its tasks, after a confirmation, and the last project cannot be deleted.
 - Not done yet: the optional Signal Forms version.
+
+## Phase 6 — Persistence, HTTP and RxJS
+
+- **One repository.** All data is under one key, so `DataRepository` (`load()` / `save()`) handles tasks and projects together. With separate task and project repositories, each would have to read the other's half before writing. It validates what it reads (`isSeedData`), has a `migrate()` hook for future schema versions, and turns `QuotaExceededError` into a `StorageFullError`.
+- **Where the data starts.** `InitialData` reads the saved data once. Only when there is none does it load `seed.json` with `httpResource`: a url of `undefined` means "do not request". The `parse` option validates the JSON, because `http.get<T>()` is only a promise to the compiler.
+- The stores' state is a `linkedSignal` over `InitialData.value()`: it starts from the saved data or the seed, and stays writable for `add`, `toggle` and the rest.
+- **Saving.** `PersistenceService` has one `effect` that saves `{ tasks, projects }` whenever either changes (option B in chapter 8). It skips saving while the seed is loading, otherwise an empty list would be saved over the coming seed. `provideAppInitializer` creates the service at startup, since nothing else injects it.
+- **Interceptors.** `loadingInterceptor` counts requests in `LoadingService` and stops in `finalize`. `errorInterceptor` uses `catchError` to show a toast, then rethrows, so the resource still ends up in its error state and the list shows "Could not load the demo data".
+- **Search** is `query` (signal) → `toObservable` → `map` / `debounceTime(250)` / `distinctUntilChanged` → `toSignal`. Signals have no idea of time; RxJS does. The filtering itself is a `computed`, in memory.
+- **Tabs in sync.** `fromEvent(window, 'storage')` + `filter` + `takeUntilDestroyed`. The event only fires in the _other_ tabs. Re-saving the received data is harmless: writing an equal value fires no new event.
+- Tested by hand in a browser: first visit loads 7 seed tasks, a toggled task survives a reload, the search waits for the pause, a second tab's new task appears in the first, a broken `seed.json` shows the toast, and a full storage shows the "storage full" message.
+- Also added: filtering by project (F4), and a "saved in this browser only" note (a risk listed in BUSINESS_PLAN.md).

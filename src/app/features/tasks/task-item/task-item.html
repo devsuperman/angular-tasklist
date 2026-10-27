@@ -9,6 +9,10 @@
 
   <a class="title" [routerLink]="['/tasks', t.id]">{{ t.title }}</a>
 
+  @if (project(); as p) {
+    <span class="project"><span class="dot" [style.background]="p.color"></span>{{ p.name }}</span>
+  }
+
   @switch (t.priority) {
     @case ('high') {
       <span class="badge high">High</span>

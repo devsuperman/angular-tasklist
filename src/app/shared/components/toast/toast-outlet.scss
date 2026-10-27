@@ -1,0 +1,35 @@
+.toasts {
+  position: fixed;
+  inset: auto 1rem 1rem auto;
+  z-index: 1000;
+  display: grid;
+  gap: 0.5rem;
+  max-width: min(24rem, calc(100vw - 2rem));
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--color-text);
+  color: var(--color-bg);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+
+  &.error {
+    background: var(--color-danger);
+    color: #fff;
+  }
+
+  span {
+    flex: 1;
+  }
+
+  button {
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+}

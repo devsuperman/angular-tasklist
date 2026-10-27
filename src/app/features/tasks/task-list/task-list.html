@@ -28,15 +28,56 @@
 
   <app-add-task (added)="add($event)" />
 
-  <app-filter-bar [(status)]="filter" />
+  <div class="toolbar">
+    <app-filter-bar [(status)]="filter" />
 
-  <ul>
-    @for (task of visibleTasks(); track task.id) {
-      <li>
-        <app-task-item [task]="task" (toggleDone)="toggle($event)" (remove)="remove($event)" />
-      </li>
-    } @empty {
-      <li class="empty">No tasks here. Enjoy your free time!</li>
+    <label class="visually-hidden" for="project-filter">Project</label>
+    <select
+      id="project-filter"
+      [value]="projectFilter()"
+      (change)="projectFilter.set(projectSelect.value)"
+      #projectSelect
+    >
+      <option value="">All projects</option>
+      @for (project of projects(); track project.id) {
+        <option [value]="project.id">{{ project.name }}</option>
+      }
+    </select>
+
+    <label class="visually-hidden" for="search">Search</label>
+    <input
+      id="search"
+      #search
+      type="search"
+      placeholder="Search by title"
+      [value]="query()"
+      (input)="query.set(search.value)"
+    />
+  </div>
+
+  @if (isLoading()) {
+    <p class="status">Loading your first tasks…</p>
+  } @else {
+    @if (loadError()) {
+      <p class="status error" role="alert">
+        Could not load the demo data. You can still add tasks.
+      </p>
     }
-  </ul>
+    <ul>
+      @for (task of visibleTasks(); track task.id) {
+        <li>
+          <app-task-item
+            [task]="task"
+            [project]="projectOf(task.projectId)"
+            (toggleDone)="toggle($event)"
+            (remove)="remove($event)"
+          />
+        </li>
+      } @empty {
+        <li class="empty">No tasks here. Enjoy your free time!</li>
+      }
+    </ul>
+  }
+
+  <p class="note">Your tasks are saved in this browser only.</p>
 </section>

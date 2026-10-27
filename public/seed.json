@@ -1,0 +1,104 @@
+{
+  "projects": [
+    {
+      "id": "inbox",
+      "name": "Inbox",
+      "color": "#6b7280"
+    },
+    {
+      "id": "study",
+      "name": "Study",
+      "color": "#2563eb"
+    },
+    {
+      "id": "work",
+      "name": "Work",
+      "color": "#d97706"
+    },
+    {
+      "id": "home",
+      "name": "Home",
+      "color": "#16a34a"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "seed-1",
+      "title": "Read the Angular signals guide",
+      "done": false,
+      "priority": "high",
+      "tags": ["angular"],
+      "projectId": "study",
+      "order": 0,
+      "createdAt": "2026-10-01T09:00:00.000Z",
+      "dueDate": "2027-01-15",
+      "description": "Start with signal, computed and effect."
+    },
+    {
+      "id": "seed-2",
+      "title": "Finish the task form validation",
+      "done": false,
+      "priority": "medium",
+      "tags": ["angular", "forms"],
+      "projectId": "study",
+      "order": 1,
+      "createdAt": "2026-10-01T09:00:00.000Z",
+      "dueDate": "2027-02-01"
+    },
+    {
+      "id": "seed-3",
+      "title": "Send the weekly report",
+      "done": false,
+      "priority": "high",
+      "tags": ["report"],
+      "projectId": "work",
+      "order": 2,
+      "createdAt": "2026-10-01T09:00:00.000Z",
+      "dueDate": "2026-10-20",
+      "description": "This one is overdue on purpose."
+    },
+    {
+      "id": "seed-4",
+      "title": "Prepare the sprint demo",
+      "done": false,
+      "priority": "medium",
+      "tags": [],
+      "projectId": "work",
+      "order": 3,
+      "createdAt": "2026-10-01T09:00:00.000Z",
+      "dueDate": "2027-03-10"
+    },
+    {
+      "id": "seed-5",
+      "title": "Buy coffee",
+      "done": true,
+      "priority": "low",
+      "tags": ["shopping"],
+      "projectId": "home",
+      "order": 4,
+      "createdAt": "2026-10-01T09:00:00.000Z"
+    },
+    {
+      "id": "seed-6",
+      "title": "Water the plants",
+      "done": false,
+      "priority": "low",
+      "tags": [],
+      "projectId": "home",
+      "order": 5,
+      "createdAt": "2026-10-01T09:00:00.000Z",
+      "dueDate": "2027-01-05"
+    },
+    {
+      "id": "seed-7",
+      "title": "Try the app in a second tab",
+      "done": false,
+      "priority": "medium",
+      "tags": ["tip"],
+      "projectId": "inbox",
+      "order": 6,
+      "createdAt": "2026-10-01T09:00:00.000Z",
+      "description": "Changes in one tab show up in the other."
+    }
+  ]
+}

@@ -111,14 +111,14 @@ Deploying early means every finished phase goes live at https://devsuperman.gith
 
 **Concepts:** `localStorage`, `provideHttpClient`, `HttpClient`, functional interceptors, `fromEvent`, `debounceTime`, `distinctUntilChanged`, `catchError`, `toSignal`, `toObservable`, `httpResource` / `rxResource`.
 
-- [ ] `TaskRepository` and `ProjectRepository` with typed methods, saving through `StorageService` (see "Storage" in TECH_STACK.md)
-- [ ] Save a schema `version`, and fall back to seed data when stored JSON is missing or invalid
-- [ ] `TaskStore` and `ProjectStore` load from and save through the repositories
-- [ ] Create `public/seed.json` and load it with `httpResource` on the first visit (loading, error and value states)
-- [ ] Interceptor for the seed request: global error handling (toast) and a loading bar
-- [ ] Search box: `toObservable` → `debounceTime` → `distinctUntilChanged` → `toSignal`, filtering in memory
-- [ ] Keep two open tabs in sync with `fromEvent(window, 'storage')`
-- [ ] Handle a full storage (`QuotaExceededError`) with a clear message
+- [x] `TaskRepository` and `ProjectRepository` with typed methods, saving through `StorageService` (see "Storage" in TECH_STACK.md). Done as one `DataRepository`, since all data shares one key (chapter 8 allows either)
+- [x] Save a schema `version`, and fall back to seed data when stored JSON is missing or invalid
+- [x] `TaskStore` and `ProjectStore` load from and save through the repositories
+- [x] Create `public/seed.json` and load it with `httpResource` on the first visit (loading, error and value states)
+- [x] Interceptor for the seed request: global error handling (toast) and a loading bar
+- [x] Search box: `toObservable` → `debounceTime` → `distinctUntilChanged` → `toSignal`, filtering in memory
+- [x] Keep two open tabs in sync with `fromEvent(window, 'storage')`
+- [x] Handle a full storage (`QuotaExceededError`) with a clear message
 
 **Done when:** data survives a reload, a first visit shows the seed data, and two tabs stay in sync.
 

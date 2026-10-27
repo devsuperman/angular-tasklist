@@ -1,26 +1,19 @@
-import { Injectable, effect, inject, signal } from '@angular/core';
-import { APP_CONFIG } from '../config/app-config';
+import { Injectable, inject, linkedSignal } from '@angular/core';
 import { Project } from '../models/project';
-import { StorageService } from './storage.service';
+import { InitialData } from './initial-data';
 
-export const DEFAULT_PROJECTS: Project[] = [
-  { id: 'inbox', name: 'Inbox', color: '#6b7280' },
-  { id: 'study', name: 'Study', color: '#2563eb' },
-  { id: 'work', name: 'Work', color: '#d97706' },
-  { id: 'home', name: 'Home', color: '#16a34a' },
-];
+/** Used when there is no saved data and the seed could not be loaded. */
+export const DEFAULT_PROJECTS: Project[] = [{ id: 'inbox', name: 'Inbox', color: '#6b7280' }];
 
 @Injectable({ providedIn: 'root' })
 export class ProjectStore {
-  private readonly storage = inject(StorageService);
-  private readonly key = `${inject(APP_CONFIG).storageKey}-projects`;
+  private readonly initial = inject(InitialData);
 
-  private readonly _projects = signal<Project[]>(this.load());
+  private readonly _projects = linkedSignal<Project[]>(() => {
+    const projects = this.initial.value()?.projects;
+    return projects?.length ? projects : DEFAULT_PROJECTS;
+  });
   readonly projects = this._projects.asReadonly();
-
-  constructor() {
-    effect(() => this.storage.setItem(this.key, JSON.stringify(this._projects())));
-  }
 
   add(input: Omit<Project, 'id'>): Project {
     const project: Project = { id: crypto.randomUUID(), ...input };
@@ -38,16 +31,12 @@ export class ProjectStore {
     this._projects.update((projects) => projects.filter((p) => p.id !== id));
   }
 
-  byId(id: string): Project | undefined {
-    return this._projects().find((p) => p.id === id);
+  /** Replaces the whole list, for example with changes made in another tab. */
+  replaceAll(projects: Project[]): void {
+    this._projects.set(projects.length ? projects : DEFAULT_PROJECTS);
   }
 
-  private load(): Project[] {
-    try {
-      const saved = JSON.parse(this.storage.getItem(this.key) ?? 'null') as Project[] | null;
-      return Array.isArray(saved) ? saved : DEFAULT_PROJECTS;
-    } catch {
-      return DEFAULT_PROJECTS;
-    }
+  byId(id: string): Project | undefined {
+    return this._projects().find((p) => p.id === id);
   }
 }
