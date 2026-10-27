@@ -37,11 +37,11 @@ Deploying early means every finished phase goes live at https://devsuperman.gith
 
 **Concepts:** standalone components, interpolation, property/event binding, `@if`, `@for` with `track`, `@switch`, `@let`, class/style bindings, component styles.
 
-- [ ] Create the `Task` and `Project` models in `core/models/`
-- [ ] `TaskListComponent` renders a hard-coded array of tasks
-- [ ] `TaskItemComponent` shows title, priority badge, due date and a checkbox
-- [ ] Empty state with `@empty` (in `@for`) or `@if` / `@else`
-- [ ] Priority badge styled with `@switch` or class bindings
+- [x] Create the `Task` and `Project` models in `core/models/`
+- [x] `TaskListComponent` renders a hard-coded array of tasks
+- [x] `TaskItemComponent` shows title, priority badge, due date and a checkbox
+- [x] Empty state with `@empty` (in `@for`) or `@if` / `@else`
+- [x] Priority badge styled with `@switch` or class bindings
 
 **Done when:** a static list renders, and the styles change with the data.
 

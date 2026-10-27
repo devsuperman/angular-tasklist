@@ -12,3 +12,11 @@ What I learned in each phase.
 - `eslint-config-prettier` is last in `eslint.config.js` so ESLint does not fight Prettier over formatting.
 - The Angular 22 CLI needs Node 22.22.3+ or 24.15+.
 - Folder layout: `core/` (singletons, models, guards, interceptors), `shared/` (reusable components, directives, pipes), `features/` (lazy-loaded pages). Empty folders hold a `.gitkeep` until they get real files.
+
+## Phase 1 — Components and templates
+
+- The model comes first: `Task` and `Project` are interfaces in `core/models/`, because the data comes from JSON (plain objects, not class instances). `Priority` is a union type, so the template type checker rejects unknown values.
+- `TaskListComponent` holds a hard-coded array in a `signal` and renders it with `@for (...; track task.id)`. `@empty` shows the empty state without an extra `@if`.
+- `TaskItemComponent` renders one row. `@let t = task();` reads the input once and gives the template a short name.
+- The priority badge uses `@switch`; the "done" style uses `[class.done]`. `[attr.aria-label]` is needed because ARIA attributes have no DOM property.
+- Component styles are scoped to the component. Colors are CSS custom properties in `styles.scss`, so a dark theme later only has to redefine the tokens.

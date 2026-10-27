@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { TaskListComponent } from './features/tasks/task-list/task-list';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [TaskListComponent],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',

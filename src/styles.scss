@@ -1,5 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles: design tokens and base elements. Component styles live next to each component. */
+:root {
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-text: #1f2937;
+  --color-muted: #4b5563;
+  --color-border: #d1d5db;
+  --color-primary: #1d4ed8;
+  --color-on-primary: #ffffff;
+  --color-danger: #b91c1c;
+  --color-high: #991b1b;
+  --color-high-bg: #fee2e2;
+  --color-medium: #854d0e;
+  --color-medium-bg: #fef9c3;
+  --color-low: #166534;
+  --color-low-bg: #dcfce7;
+  color-scheme: light;
+}
+
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
 }

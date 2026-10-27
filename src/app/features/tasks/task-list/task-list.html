@@ -1,0 +1,11 @@
+<section class="task-list">
+  <h2>Tasks</h2>
+
+  <ul>
+    @for (task of tasks(); track task.id) {
+      <li><app-task-item [task]="task" /></li>
+    } @empty {
+      <li class="empty">No tasks yet. Enjoy your free time!</li>
+    }
+  </ul>
+</section>

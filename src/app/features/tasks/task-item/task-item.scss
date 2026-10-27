@@ -1,0 +1,45 @@
+.task {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  background: var(--color-surface);
+
+  &.done .title {
+    text-decoration: line-through;
+    color: var(--color-muted);
+  }
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.badge {
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  &.high {
+    background: var(--color-high-bg);
+    color: var(--color-high);
+  }
+  &.medium {
+    background: var(--color-medium-bg);
+    color: var(--color-medium);
+  }
+  &.low {
+    background: var(--color-low-bg);
+    color: var(--color-low);
+  }
+}
+
+.due {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}

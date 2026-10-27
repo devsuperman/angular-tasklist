@@ -1,0 +1,24 @@
+@let t = task();
+<article class="task" [class.done]="t.done">
+  <input type="checkbox" [checked]="t.done" [attr.aria-label]="'Done: ' + t.title" />
+
+  <span class="title">{{ t.title }}</span>
+
+  @switch (t.priority) {
+    @case ('high') {
+      <span class="badge high">High</span>
+    }
+    @case ('medium') {
+      <span class="badge medium">Medium</span>
+    }
+    @case ('low') {
+      <span class="badge low">Low</span>
+    }
+  }
+
+  @if (t.dueDate) {
+    <time class="due" [attr.datetime]="t.dueDate">{{ t.dueDate }}</time>
+  } @else {
+    <span class="due none">No due date</span>
+  }
+</article>

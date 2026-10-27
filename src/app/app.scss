@@ -1,8 +1,11 @@
 .app-header {
   padding: 1rem;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
 }
 
 main {
+  max-width: 48rem;
+  margin: 0 auto;
   padding: 1rem;
 }
