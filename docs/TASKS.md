@@ -94,15 +94,15 @@ Deploying early means every finished phase goes live at https://devsuperman.gith
 
 **Concepts:** reactive forms, typed forms, `NonNullableFormBuilder`, `FormArray`, validators (sync, async, cross-field), `ControlValueAccessor`, template-driven forms.
 
-- [ ] Task form: title (required, min length), description, priority, due date, project
-- [ ] Tags with `FormArray` (add and remove)
-- [ ] Custom validator: due date is not in the past
-- [ ] Async validator: title is unique within the project
-- [ ] Show validation messages, and disable save while the form is invalid
-- [ ] One form for both create and edit
-- [ ] `PrioritySelectorComponent` implementing `ControlValueAccessor`
-- [ ] `unsavedChangesGuard` (`canDeactivate`) for a dirty form
-- [ ] Project form (template-driven with `ngModel`) to compare the two approaches
+- [x] Task form: title (required, min length), description, priority, due date, project
+- [x] Tags with `FormArray` (add and remove)
+- [x] Custom validator: due date is not in the past
+- [x] Async validator: title is unique within the project
+- [x] Show validation messages, and disable save while the form is invalid
+- [x] One form for both create and edit
+- [x] `PrioritySelectorComponent` implementing `ControlValueAccessor`
+- [x] `unsavedChangesGuard` (`canDeactivate`) for a dirty form
+- [x] Project form (template-driven with `ngModel`) to compare the two approaches
 - [ ] Optional: rebuild the task form with Signal Forms and compare
 
 **Done when:** you can create and edit tasks and projects with validation.

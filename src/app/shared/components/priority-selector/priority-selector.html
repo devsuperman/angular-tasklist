@@ -1,0 +1,27 @@
+<fieldset class="priority-selector">
+  <legend>Priority</legend>
+  @for (option of options; track option) {
+    <label [class]="option" [class.selected]="value() === option">
+      <input
+        type="radio"
+        [name]="name"
+        [value]="option"
+        [checked]="value() === option"
+        [disabled]="disabled()"
+        (change)="select(option)"
+        (blur)="onTouched()"
+      />
+      @switch (option) {
+        @case ('low') {
+          Low
+        }
+        @case ('medium') {
+          Medium
+        }
+        @case ('high') {
+          High
+        }
+      }
+    </label>
+  }
+</fieldset>

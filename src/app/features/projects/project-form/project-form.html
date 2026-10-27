@@ -1,0 +1,29 @@
+<form class="project-form" #projectForm="ngForm" (ngSubmit)="save(projectForm)">
+  <div class="field">
+    <label [for]="uid + '-name'">{{ project() ? 'Name' : 'New project' }}</label>
+    <input
+      [id]="uid + '-name'"
+      name="name"
+      [(ngModel)]="name"
+      required
+      minlength="2"
+      maxlength="40"
+      autocomplete="off"
+      #nameCtrl="ngModel"
+    />
+  </div>
+
+  <div class="field">
+    <label [for]="uid + '-color'">Color</label>
+    <input [id]="uid + '-color'" name="color" type="color" [(ngModel)]="color" />
+  </div>
+
+  <button type="submit" [disabled]="projectForm.invalid">{{ project() ? 'Save' : 'Add' }}</button>
+  @if (project()) {
+    <button type="button" class="secondary" (click)="cancelled.emit()">Cancel</button>
+  }
+
+  @if (nameCtrl.invalid && nameCtrl.touched) {
+    <p class="error" role="alert">The name needs 2 to 40 characters.</p>
+  }
+</form>

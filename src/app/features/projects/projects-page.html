@@ -1,11 +1,35 @@
 <h2>Projects</h2>
 
+<app-card>
+  <app-project-form (saved)="add($event)" />
+</app-card>
+
 <ul class="projects">
   @for (project of projects(); track project.id) {
     <li>
-      <span class="swatch" [style.background]="project.color" aria-hidden="true"></span>
-      <span class="name">{{ project.name }}</span>
-      <span class="count">{{ project.taskCount }} tasks</span>
+      @if (editingId() === project.id) {
+        <app-project-form
+          class="edit"
+          [project]="project"
+          (saved)="rename(project.id, $event)"
+          (cancelled)="editingId.set(null)"
+        />
+      } @else {
+        <span class="swatch" [style.background]="project.color" aria-hidden="true"></span>
+        <span class="name">{{ project.name }}</span>
+        <span class="count">{{ project.taskCount }} tasks</span>
+        <button type="button" class="link" (click)="editingId.set(project.id)">
+          Rename <span class="visually-hidden">{{ project.name }}</span>
+        </button>
+        <button
+          type="button"
+          class="link danger"
+          [disabled]="!canDelete()"
+          (click)="remove(project)"
+        >
+          Delete <span class="visually-hidden">{{ project.name }}</span>
+        </button>
+      }
     </li>
   } @empty {
     <li class="empty">No projects yet.</li>

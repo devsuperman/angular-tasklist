@@ -52,3 +52,19 @@ What I learned in each phase.
 - The header uses `routerLinkActive="active"` plus `ariaCurrentWhenActive="page"`, so screen readers also know which link is current.
 - Every route has a `title`; the router sets `document.title` from it.
 - The app test now needs `provideRouter([])` because the header uses `RouterLink`.
+
+## Phase 5 — Forms
+
+- `TaskFormPage` is a **typed reactive form** built with `NonNullableFormBuilder`, so `getRawValue()` returns `{ title: string; ... }` with no `null`s, and `reset()` goes back to the initial values.
+- One form for create and edit. An `effect` fills the form when the resolved `task` input arrives, wrapped in `untracked` so the form calls inside it don't become dependencies.
+- Validators:
+  - built-in: `required`, `minLength`, `maxLength`;
+  - custom sync: `notInThePast` (`shared/validators/not-in-the-past.ts`). In the form it only runs on a **dirty** control, so an overdue task can still be edited without changing its date;
+  - async: `uniqueTitleValidator`, unique title within the project. The form is `pending` while it runs, and the title is re-validated when the project changes (`valueChanges` + `takeUntilDestroyed(DestroyRef)`);
+  - cross-field: `highPriorityNeedsDate` on the group.
+- Tags use a `FormArray`. Track the `@for` by the control object, since index tracking breaks when a tag in the middle is removed.
+- `PrioritySelectorComponent` implements `ControlValueAccessor` (`writeValue`, `registerOnChange`, `registerOnTouched`, `setDisabledState`) and registers itself with `NG_VALUE_ACCESSOR` + `forwardRef`. After that, `formControlName="priority"` just works on it.
+- `unsavedChangesGuard` (`CanDeactivateFn<HasUnsavedChanges>`) asks before leaving a dirty form. The page sets `saved = true` before navigating, or the guard would block its own redirect.
+- `ProjectFormComponent` is **template-driven** (`ngModel` on signals, `#projectForm="ngForm"`). Its fields are `linkedSignal`s: they start from the `project` input and stay writable. Compared with reactive forms, it's less code for a tiny form, but the validation lives in the HTML and is harder to test.
+- Projects: create, rename (inline, reusing the same form) and delete. Deleting a project also deletes its tasks, after a confirmation, and the last project cannot be deleted.
+- Not done yet: the optional Signal Forms version.

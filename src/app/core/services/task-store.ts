@@ -57,6 +57,11 @@ export class TaskStore {
     this._tasks.update((tasks) => tasks.filter((t) => t.id !== id));
   }
 
+  /** Removes every task of a project (used when the project is deleted). */
+  removeByProject(projectId: string): void {
+    this._tasks.update((tasks) => tasks.filter((t) => t.projectId !== projectId));
+  }
+
   byId(id: string): Task | undefined {
     return this._tasks().find((t) => t.id === id);
   }

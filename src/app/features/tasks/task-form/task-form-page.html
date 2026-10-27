@@ -1,9 +1,80 @@
 <h2>{{ isEdit() ? 'Edit task' : 'New task' }}</h2>
 
-@if (task(); as t) {
-  <p>
-    Editing <strong>{{ t.title }}</strong> ({{ id() }}).
-  </p>
-}
+<form class="task-form" [formGroup]="form" (ngSubmit)="save()" novalidate>
+  <div class="field">
+    <label for="title">Title</label>
+    @let title = form.controls.title;
+    <input
+      id="title"
+      formControlName="title"
+      autocomplete="off"
+      [attr.aria-invalid]="title.invalid && title.touched"
+      aria-describedby="title-error"
+    />
+    <p id="title-error" class="error" role="alert">
+      @if (title.invalid && title.touched) {
+        @if (title.hasError('required')) {
+          The title is required.
+        } @else if (title.hasError('minlength')) {
+          Use at least 3 characters.
+        } @else if (title.hasError('maxlength')) {
+          Use at most 120 characters.
+        } @else if (title.hasError('titleTaken')) {
+          This project already has a task with this title.
+        }
+      }
+    </p>
+  </div>
 
-<a routerLink="/tasks">Back to the list</a>
+  <div class="field">
+    <label for="description">Description</label>
+    <textarea id="description" formControlName="description" rows="3"></textarea>
+  </div>
+
+  <app-priority-selector formControlName="priority" />
+
+  <div class="row">
+    <div class="field">
+      <label for="dueDate">Due date</label>
+      <input id="dueDate" type="date" formControlName="dueDate" aria-describedby="due-error" />
+      <p id="due-error" class="error" role="alert">
+        @if (form.controls.dueDate.hasError('pastDate')) {
+          The due date cannot be in the past.
+        } @else if (form.hasError('dueDateRequiredForHigh') && form.touched) {
+          A high-priority task needs a due date.
+        }
+      </p>
+    </div>
+
+    <div class="field">
+      <label for="projectId">Project</label>
+      <select id="projectId" formControlName="projectId">
+        @for (project of projects(); track project.id) {
+          <option [value]="project.id">{{ project.name }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <fieldset class="tags" formArrayName="tags">
+    <legend>Tags</legend>
+    @for (tag of tags.controls; track tag; let i = $index) {
+      <div class="tag">
+        <input [formControlName]="i" [attr.aria-label]="'Tag ' + (i + 1)" />
+        <button type="button" class="link" (click)="removeTag(i)">
+          Remove <span class="visually-hidden">tag {{ i + 1 }}</span>
+        </button>
+      </div>
+    } @empty {
+      <p class="hint">No tags.</p>
+    }
+    <button type="button" class="link" (click)="addTag()">Add tag</button>
+  </fieldset>
+
+  <div class="actions">
+    <a routerLink="/tasks">Cancel</a>
+    <button type="submit" [disabled]="form.invalid || form.pending">
+      {{ isEdit() ? 'Save' : 'Create' }}
+    </button>
+  </div>
+</form>
