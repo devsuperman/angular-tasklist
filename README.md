@@ -1,5 +1,9 @@
 # angular-tasklist
 
+[![Deploy to GitHub Pages](https://github.com/devsuperman/angular-tasklist/actions/workflows/deploy.yml/badge.svg)](https://github.com/devsuperman/angular-tasklist/actions/workflows/deploy.yml)
+
+**Live demo:** https://devsuperman.github.io/angular-tasklist/
+
 My Angular study project: a task list app built step by step to learn Angular's main features.
 
 ## Docs
@@ -19,4 +23,9 @@ npm test               # unit tests (Vitest)
 npm run lint           # ESLint (angular-eslint)
 npm run format         # Prettier
 npm run build          # production build in dist/
+npm run build:pages    # GitHub Pages build (base href /angular-tasklist/ + 404.html)
 ```
+
+## Deployment
+
+Every push to `main` runs [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml): lint, test, `npm run build:pages`, then publish to GitHub Pages. The repo setting **Settings → Pages → Source** must be **GitHub Actions**.
